@@ -31,4 +31,11 @@ ALL_DEFAULT_INSTALLED_MODULES += \
     $(BT_FIRMWARE_MOUNT_POINT) \
     $(DSP_MOUNT_POINT)
 
+# Add the conditional statement for libfastcvopt
+ifeq ($(TARGET_ARCH),arm)
+    LOCAL_SHARED_LIBRARIES += libfastcvopt
+else ifeq ($(TARGET_ARCH),arm64)
+    LOCAL_SHARED_LIBRARIES += libfastcvopt
+endif
+
 endif
