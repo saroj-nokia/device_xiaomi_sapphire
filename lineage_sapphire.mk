@@ -18,7 +18,7 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 -include vendor/lineage-priv/keys/keys.mk
 
 # Gapps
-$(call inherit-product-if-exists, vendor/gapps/gms_full.mk)
+$(call inherit-product-if-exists, vendor/gms/gms_full.mk)
 
 # Device configs
 TARGET_BOOT_ANIMATION_RES = 1080
