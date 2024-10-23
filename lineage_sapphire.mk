@@ -17,9 +17,6 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 # Include our private certificate
 -include vendor/lineage-priv/keys/keys.mk
 
-# Gapps
-$(call inherit-product-if-exists, vendor/gms/gms_full.mk)
-
 # Device configs
 TARGET_BOOT_ANIMATION_RES = 1080
 TARGET_HAS_UDFPS := true
