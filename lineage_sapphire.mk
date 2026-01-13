@@ -14,26 +14,18 @@ $(call inherit-product, device/xiaomi/sapphire/device.mk)
 # Inherit some common Lineage stuff.
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
-# Include our private certificate
--include vendor/lineage-priv/keys/keys.mk
+PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
-# Gapps
--include vendor/gms/products/gms.mk
-
-# Gapps config
-TARGET_SUPPORTS_GOOGLE_RECORDER := true
-TARGET_INCLUDE_STOCK_ARCORE := false
-TARGET_INCLUDE_GOOGLE_COMMS := true
-TARGET_INCLUDE_PIXEL_LAUNCHER := false
-TARGET_INCLUDE_LIVE_WALLPAPERS := false
-WITH_GMS := true
-
-# AudioFX
-TARGET_EXCLUDES_AUDIOFX := true
-
-# Device configs
-TARGET_BOOT_ANIMATION_RES = 1080
+# EvolutionX Config
+TARGET_BOOT_ANIMATION_RES := 1080
+TARGET_BUILD_APERTURE_CAMERA := false
+TARGET_DISABLE_EPPE := true
 TARGET_HAS_UDFPS := true
+
+# Extra stuff (From A14 cfg)
+TARGET_SUPPORTS_QUICK_TAP := true
+TARGET_ENABLE_BLUR := true
+TARGET_USES_MINI_GAPPS := true
 
 PRODUCT_NAME := lineage_sapphire
 PRODUCT_DEVICE := sapphire
@@ -43,6 +35,4 @@ PRODUCT_MODEL := Redmi Note 13
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
-PRODUCT_BUILD_PROP_OVERRIDES += \
-    BuildDesc="sapphire_global-user 15 AQ3A.240829.003 OS2.0.208.0.VNGMIXM release-keys" \
-    BuildFingerprint=Redmi/sapphire_global/sapphire:15/AQ3A.240829.003/OS2.0.208.0.VNGMIXM:user/release-keys
+BUILD_FINGERPRINT := Redmi/sapphiren_global/sapphire:13/TKQ1.221114.001/OS2.0.207.0.VNGMIXM:user/release-keys
