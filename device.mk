@@ -666,4 +666,16 @@ PRODUCT_PACKAGES += \
     firmware_WCNSS_qcom_cfg.ini_symlink \
     firmware_wlanmdsp.mbn_symlink
     
+# App Freezer (Millet equivalent)
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.use_app_freezer=true \
+    persist.sys.appfreeze=true \
+    persist.sys.appfreeze.timeout=5000
+
+# Device Idle / Doze
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.qti.sys.fw.bservice_enable=true \
+    ro.vendor.qti.sys.fw.bservice_limit=5 \
+    ro.vendor.qti.sys.fw.bservice_age=5000
+
 $(shell mkdir -p $(OUT_DIR)/target/product/$(TARGET_DEVICE)/obj/KERNEL_OBJ/usr)
