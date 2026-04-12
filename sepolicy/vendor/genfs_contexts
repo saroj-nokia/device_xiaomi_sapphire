@@ -81,7 +81,7 @@ genfscon sysfs /devices/platform/soc/4ac0000.qcom,qupv3_0_geni_se/4a84000.i2c/i2
 genfscon sysfs /devices/platform/soc/4ac0000.qcom,qupv3_0_geni_se/4a84000.i2c/i2c-0/0-0051/wakeup/wakeup19 u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/soc/4ac0000.qcom,qupv3_0_geni_se/.*/power_supply/.*/wakeup[0-9]* u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/virtual/power_supply/.*/wakeup[0-9]* u:object_r:sysfs_wakeup:s0
-genfscon sysfs /class/wakeup(/.*)?               u:object_r:sysfs_wakeup:s0
+# genfscon sysfs /class/wakeup(/.*)?               u:object_r:sysfs_wakeup:s0
 
 # Walt scheduler tunables
 genfscon proc /sys/walt/sched_per_task_boost u:object_r:proc_walt:s0
@@ -90,7 +90,7 @@ genfscon proc /sys/net/ipv4/ip_local_unbindable_ports u:object_r:proc_net_local_
 
 
 # Power
-genfscon sysfs /power/mem_sleep u:object_r:vendor_sysfs_sleep_modes:s0
+# genfscon sysfs /power/mem_sleep u:object_r:vendor_sysfs_sleep_modes:s0
 
 # Thermal
 genfscon sysfs /class/thermal/thermal_message u:object_r:vendor_sysfs_thermal_message:s0
