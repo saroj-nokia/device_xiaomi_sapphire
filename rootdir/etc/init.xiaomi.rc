@@ -30,6 +30,10 @@ on boot && property:ro.boot.hwname=sapphire
     setprop ro.vendor.se.type ""
 
 on boot
+    # Deep sleep / Sleep states
+    write /sys/power/mem_sleep "s2idle"
+    write /sys/devices/system/cpu/qcom_lpm/parameters/sleep_disabled N
+
     # Goodix sensor (if you have dual sensor support)
     chmod 0666 /dev/goodix_fp
     chown system system /dev/goodix_fp
