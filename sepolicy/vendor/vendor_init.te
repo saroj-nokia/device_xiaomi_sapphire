@@ -16,6 +16,7 @@ set_prop(vendor_init, vendor_fp_info_prop)
 
 allow vendor_init vendor_sysfs_lpm:file w_file_perms;
 allow vendor_init vendor_sysfs_sleep_modes:file w_file_perms;
+allow vendor_init vendor_sysfs_mglru:file w_file_perms;
 
 # Allow init.qcom.usb.sh to create files in uvc.0
 allow vendor_qti_init_shell configfs:dir create_dir_perms;
