@@ -134,6 +134,12 @@ sh_binary {
 }
 
 sh_binary {
+    name: "init.zram.sh",
+    src: "bin/init.zram.sh",
+    vendor: true,
+}
+
+sh_binary {
     name: "system_dlkm_modprobe.sh",
     src: "bin/system_dlkm_modprobe.sh",
     vendor: true,

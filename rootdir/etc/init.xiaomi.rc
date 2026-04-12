@@ -86,3 +86,13 @@ on property:sys.boot_completed=1
 
 on property:ro.boot.hwname=*
     setprop ro.boot.product.hardware.sku ${ro.boot.hwname}
+
+service vendor.zram /vendor/bin/init.zram.sh
+    class late_start
+    user root
+    group root
+    disabled
+    oneshot
+
+on property:persist.vendor.zram.size=*
+    start vendor.zram

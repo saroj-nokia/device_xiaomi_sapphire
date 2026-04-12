@@ -23,9 +23,11 @@ public class ThermalUtils {
 
     public static final String PREF_THERMAL_BALANCE = "thermal_balance_mode";
     public static final String PREF_THERMAL_SCONFIG = "thermal_sconfig";
+    public static final String PREF_ZRAM_SIZE = "zram_size";
 
     public static final String DEFAULT_THERMAL_BALANCE = "2";
     public static final String DEFAULT_THERMAL_SCONFIG = "0";
+    public static final String DEFAULT_ZRAM_SIZE = "0";
 
     public static boolean writeNode(String path, String value) {
         try (FileOutputStream fos = new FileOutputStream(path)) {
@@ -55,6 +57,10 @@ public class ThermalUtils {
         writeNode(THERMAL_SCONFIG_PATH, value);
     }
 
+    public static void applyZramSize(String value) {
+        android.os.SystemProperties.set("persist.vendor.zram.size", value);
+    }
+
     public static void restoreSettings(android.content.Context context) {
         android.content.SharedPreferences prefs =
                 android.preference.PreferenceManager.getDefaultSharedPreferences(
@@ -62,10 +68,12 @@ public class ThermalUtils {
 
         String balance = prefs.getString(PREF_THERMAL_BALANCE, DEFAULT_THERMAL_BALANCE);
         String sconfig = prefs.getString(PREF_THERMAL_SCONFIG, DEFAULT_THERMAL_SCONFIG);
+        String zramSize = prefs.getString(PREF_ZRAM_SIZE, DEFAULT_ZRAM_SIZE);
 
         applyThermalBalance(balance);
         applyThermalSconfig(sconfig);
+        applyZramSize(zramSize);
 
-        Log.i(TAG, "Restored thermal settings: balance=" + balance + " sconfig=" + sconfig);
+        Log.i(TAG, "Restored settings: balance=" + balance + " sconfig=" + sconfig + " zram=" + zramSize);
     }
 }

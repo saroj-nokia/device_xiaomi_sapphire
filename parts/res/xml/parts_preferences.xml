@@ -25,4 +25,16 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/memory_category">
+
+        <ListPreference
+            android:key="zram_size"
+            android:title="@string/zram_size_title"
+            android:summary="@string/zram_size_summary"
+            android:entries="@array/zram_size_entries"
+            android:entryValues="@array/zram_size_values"
+            android:defaultValue="0" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

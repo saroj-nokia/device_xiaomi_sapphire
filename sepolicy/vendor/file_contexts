@@ -24,6 +24,7 @@
 
 # Init
 /(vendor|system/vendor)/bin/init\.sapphire_perf\.sh u:object_r:vendor_qti_init_shell_exec:s0
+/vendor/bin/init\.zram\.sh u:object_r:vendor_zram_init_shell_exec:s0
 
 # Mac Address
 /data/vendor/mac_addr(/.*)? u:object_r:vendor_mac_vendor_data_file:s0
