@@ -25,10 +25,12 @@ public class DevicePartsFragment extends PreferenceFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getPreferenceManager().setStorageDeviceProtected();
         addPreferencesFromResource(R.xml.parts_preferences);
 
         Resources res = getResources();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
 
         mSconfigDescriptions = res.getStringArray(R.array.thermal_sconfig_descriptions);
         mBalanceDescriptions = res.getStringArray(R.array.thermal_balance_descriptions);

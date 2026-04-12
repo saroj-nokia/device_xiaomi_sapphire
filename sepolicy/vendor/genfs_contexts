@@ -88,3 +88,6 @@ genfscon proc /sys/walt/sched_per_task_boost u:object_r:proc_walt:s0
 
 genfscon proc /sys/net/ipv4/ip_local_unbindable_ports u:object_r:proc_net_local_unbindable_ports:s0
 
+
+# Thermal
+genfscon sysfs /class/thermal/thermal_message u:object_r:vendor_sysfs_thermal_message:s0

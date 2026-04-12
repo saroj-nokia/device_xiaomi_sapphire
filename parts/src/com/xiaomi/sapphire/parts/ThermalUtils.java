@@ -57,7 +57,8 @@ public class ThermalUtils {
 
     public static void restoreSettings(android.content.Context context) {
         android.content.SharedPreferences prefs =
-                android.preference.PreferenceManager.getDefaultSharedPreferences(context);
+                android.preference.PreferenceManager.getDefaultSharedPreferences(
+                        context.createDeviceProtectedStorageContext());
 
         String balance = prefs.getString(PREF_THERMAL_BALANCE, DEFAULT_THERMAL_BALANCE);
         String sconfig = prefs.getString(PREF_THERMAL_SCONFIG, DEFAULT_THERMAL_SCONFIG);

@@ -17,5 +17,8 @@ type proc_walt, fs_type, proc_type;
 # CPU DMA latency device type
 type device_latency, dev_type;
 
+# Thermal
+type vendor_sysfs_thermal_message, fs_type, sysfs_type;
+
 type proc_net_local_unbindable_ports, fs_type, proc_type;
 
