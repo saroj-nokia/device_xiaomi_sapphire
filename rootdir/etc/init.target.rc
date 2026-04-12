@@ -364,13 +364,3 @@ on property:persist.sys.cota.carrier=OR
 on property:persist.ro.ril.oem.btmac=*
   setprop ro.ril.oem.btmac ${persist.ro.ril.oem.btmac}
 
-on late-init
-    # === Multi-Gen LRU (MGLRU) Optimization (Forced Activation) ===
-    # Fixes the issue where the property trigger fails on user builds.
-    
-    # 1. Force CORE MGLRU Activation (Value 1 = core features)
-    write /sys/kernel/mm/lru_gen/enabled 1
-    
-    # 2. Add Thrashing Prevention (Min Time To Live = 1000ms/1 second)
-    write /sys/kernel/mm/lru_gen/min_ttl_ms 1000
-

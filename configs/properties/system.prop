@@ -83,4 +83,7 @@ persist.vendor.sensors.enable.mag_filter=true
 # SSR
 persist.vendor.ssr.restart_level=ALL_ENABLE
 
+# Multi-Gen LRU
+persist.device_config.mglru_native.lru_gen_config=core
+
 
