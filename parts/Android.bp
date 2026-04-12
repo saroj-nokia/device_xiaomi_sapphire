@@ -1,0 +1,16 @@
+// Copyright (C) 2024 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+
+android_app {
+    name: "DeviceParts",
+    srcs: ["src/**/*.java"],
+    resource_dirs: ["res"],
+    manifest: "AndroidManifest.xml",
+    sdk_version: "current",
+    certificate: "platform",
+    privileged: true,
+    product_specific: true,
+    optimize: {
+        enabled: false,
+    },
+}

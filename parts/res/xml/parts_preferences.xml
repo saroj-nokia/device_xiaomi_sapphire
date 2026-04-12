@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/thermal_category">
+
+        <ListPreference
+            android:key="thermal_sconfig"
+            android:title="@string/thermal_sconfig_title"
+            android:summary="@string/thermal_sconfig_summary"
+            android:entries="@array/thermal_sconfig_entries"
+            android:entryValues="@array/thermal_sconfig_values"
+            android:defaultValue="0" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/performance_category">
+
+        <ListPreference
+            android:key="thermal_balance_mode"
+            android:title="@string/thermal_balance_title"
+            android:summary="@string/thermal_balance_summary"
+            android:entries="@array/thermal_balance_entries"
+            android:entryValues="@array/thermal_balance_values"
+            android:defaultValue="2" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

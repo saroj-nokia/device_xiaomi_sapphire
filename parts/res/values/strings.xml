@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Device Parts</string>
+    <string name="app_summary">Device specific settings</string>
+
+    <!-- Thermal Profile Category -->
+    <string name="thermal_category">Thermal Profile</string>
+    <string name="thermal_sconfig_title">Thermal Profile</string>
+    <string name="thermal_sconfig_summary">Select the kernel thermal behavior profile</string>
+
+    <string-array name="thermal_sconfig_entries">
+        <item>Battery Saver</item>
+        <item>Balanced</item>
+        <item>Navigation</item>
+        <item>Gaming</item>
+        <item>No Limits</item>
+        <item>High Performance</item>
+        <item>High Performance Gaming</item>
+    </string-array>
+
+    <string-array name="thermal_sconfig_values">
+        <item>11</item>
+        <item>0</item>
+        <item>19</item>
+        <item>20</item>
+        <item>10</item>
+        <item>500</item>
+        <item>520</item>
+    </string-array>
+
+    <string-array name="thermal_sconfig_descriptions">
+        <item>Most restrictive thermal limits. Reduces heat and power consumption. Ideal for charging or prolonged light use.</item>
+        <item>Default daily use profile. Balanced between performance and temperature.</item>
+        <item>Optimized for continuous screen-on use like GPS navigation. Stable thermals over long sessions.</item>
+        <item>Tuned for gaming workloads. Allows higher sustained CPU/GPU clocks with controlled thermals.</item>
+        <item>Removes thermal throttling limits. Maximum performance but generates significant heat. Use with caution.</item>
+        <item>High performance profile for demanding tasks. Higher power and clock ceilings than Balanced.</item>
+        <item>Combines High Performance and Gaming profiles. Maximum sustained performance for intensive gaming sessions.</item>
+    </string-array>
+
+    <!-- Performance Mode Category -->
+    <string name="performance_category">Performance Mode</string>
+    <string name="thermal_balance_title">Performance Mode</string>
+    <string name="thermal_balance_summary">Control CPU and touchpanel response behavior</string>
+
+    <string-array name="thermal_balance_entries">
+        <item>Economy</item>
+        <item>Balanced</item>
+        <item>Performance</item>
+    </string-array>
+
+    <string-array name="thermal_balance_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="thermal_balance_descriptions">
+        <item>Reduces CPU response and touch report rate. Saves battery, less heat. Best for light use or charging.</item>
+        <item>Default mode. Standard CPU and touch response for everyday use.</item>
+        <item>Increases CPU response and touch report rate. Best for gaming or performance-intensive tasks.</item>
+    </string-array>
+</resources>
