@@ -13,3 +13,5 @@ vendor_public_prop(vendor_fp_prop)
 # WiFi
 vendor_public_prop(vendor_wifimac_prop)
 
+# ZRAM
+vendor_public_prop(vendor_zram_prop)

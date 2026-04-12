@@ -334,6 +334,7 @@ PRODUCT_PACKAGES += \
     init.qti.early_init.sh \
     init.qti.kernel.sh \
     init.qti.write.sh \
+    init.zram.sh \
     system_dlkm_modprobe.sh \
     vendor_modprobe.sh
 
@@ -670,12 +671,15 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.use_app_freezer=true \
     persist.sys.appfreeze=true \
-    persist.sys.appfreeze.timeout=5000
+    persist.sys.appfreeze.timeout=5000 \
+    ro.cached_apps_freezer.enabled=true \
+    persist.sys.device_config.runtime_native.cached_apps_freezer_enabled=true
 
 # Device Idle / Doze
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.qti.sys.fw.bservice_enable=true \
     ro.vendor.qti.sys.fw.bservice_limit=5 \
-    ro.vendor.qti.sys.fw.bservice_age=5000
+    ro.vendor.qti.sys.fw.bservice_age=5000 \
+    ro.vendor.qti.am.reschedule_service=true
 
 $(shell mkdir -p $(OUT_DIR)/target/product/$(TARGET_DEVICE)/obj/KERNEL_OBJ/usr)

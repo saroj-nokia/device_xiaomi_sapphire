@@ -96,22 +96,62 @@ void vendor_load_properties() {
     struct sysinfo sys;
     sysinfo(&sys);
 
-    if (sys.totalram > 6144ull * 1024 * 1024) {
+    if (sys.totalram > 12288ull * 1024 * 1024) {
+        // from - phone-xhdpi-16384-dalvik-heap.mk
+        heapstartsize = "32m";
+        heapgrowthlimit = "512m";
+        heapsize = "768m";
+        heaptargetutilization = "0.3";
+        heapminfree = "8m";
+        heapmaxfree = "16m";
+    } else if (sys.totalram > 8192ull * 1024 * 1024) {
+        // from - phone-xhdpi-12288-dalvik-heap.mk
+        heapstartsize = "24m";
+        heapgrowthlimit = "448m";
+        heapsize = "768m";
+        heaptargetutilization = "0.35";
+        heapminfree = "8m";
+        heapmaxfree = "16m";
+    } else if (sys.totalram > 6144ull * 1024 * 1024) {
         // from - phone-xhdpi-8192-dalvik-heap.mk
         heapstartsize = "16m";
         heapgrowthlimit = "384m";
         heapsize = "512m";
-        heaptargetutilization = "0.5";
+        heaptargetutilization = "0.4";
         heapminfree = "8m";
         heapmaxfree = "16m";
     } else if (sys.totalram > 4096ull * 1024 * 1024) {
         // from - phone-xhdpi-6144-dalvik-heap.mk
-        heapstartsize = "12m";
+        heapstartsize = "16m";
         heapgrowthlimit = "320m";
-        heapsize = "448m";
-        heaptargetutilization = "0.45";
+        heapsize = "512m";
+        heaptargetutilization = "0.5";
         heapminfree = "8m";
         heapmaxfree = "16m";
+    } else if (sys.totalram > 2048ull * 1024 * 1024) {
+        // from - phone-xhdpi-4096-dalvik-heap.mk
+        heapstartsize = "8m";
+        heapgrowthlimit = "256m";
+        heapsize = "512m";
+        heaptargetutilization = "0.6";
+        heapminfree = "8m";
+        heapmaxfree = "16m";
+    } else if (sys.totalram > 1024ull * 1024 * 1024) {
+        // from - phone-xhdpi-2048-dalvik-heap.mk
+        heapstartsize = "8m";
+        heapgrowthlimit = "192m";
+        heapsize = "512m";
+        heaptargetutilization = "0.75";
+        heapminfree = "512k";
+        heapmaxfree = "8m";
+    } else {
+        // from - phone-xhdpi-1024-dalvik-heap.mk
+        heapstartsize = "8m";
+        heapgrowthlimit = "64m";
+        heapsize = "128m";
+        heaptargetutilization = "0.75";
+        heapminfree = "512k";
+        heapmaxfree = "8m";
     }
 
     property_override("dalvik.vm.heapstartsize", heapstartsize);

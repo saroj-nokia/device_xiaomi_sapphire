@@ -17,6 +17,12 @@ type proc_walt, fs_type, proc_type;
 # CPU DMA latency device type
 type device_latency, dev_type;
 
+# Power
+type vendor_sysfs_sleep_modes, fs_type, sysfs_type;
+
+# LMK
+type vendor_sysfs_lpm, fs_type, sysfs_type;
+
 # Thermal
 type vendor_sysfs_thermal_message, fs_type, sysfs_type;
 

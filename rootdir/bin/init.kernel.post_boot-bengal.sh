@@ -336,8 +336,6 @@ do
 	echo 2092000 > $ddrbw/max_freq
 done
 
-echo s2idle > /sys/power/mem_sleep
-echo N > /sys/devices/system/cpu/qcom_lpm/parameters/sleep_disabled
 
 # Let kernel know our image version/variant/crm_version
 if [ -f /sys/devices/soc0/select_image ]; then

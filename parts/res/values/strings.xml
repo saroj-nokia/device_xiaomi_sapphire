@@ -60,4 +60,45 @@
         <item>Default mode. Standard CPU and touch response for everyday use.</item>
         <item>Increases CPU response and touch report rate. Best for gaming or performance-intensive tasks.</item>
     </string-array>
+
+    <!-- ZRAM Category -->
+    <string name="memory_category">Memory Management</string>
+    <string name="zram_size_title">ZRAM Swap Size</string>
+    <string name="zram_size_summary">Select virtual memory size to swap compressed data</string>
+
+    <string-array name="zram_size_entries">
+        <item>Disabled</item>
+        <item>1 GB</item>
+        <item>2 GB</item>
+        <item>3 GB</item>
+        <item>4 GB</item>
+        <item>6 GB</item>
+        <item>8 GB</item>
+        <item>12 GB</item>
+        <item>16 GB</item>
+    </string-array>
+
+    <string-array name="zram_size_values">
+        <item>0</item>
+        <item>1024</item>
+        <item>2048</item>
+        <item>3072</item>
+        <item>4096</item>
+        <item>6144</item>
+        <item>8192</item>
+        <item>12288</item>
+        <item>16384</item>
+    </string-array>
+
+    <string-array name="zram_size_descriptions">
+        <item>Disable virtual memory swap. Best for maximum RAM speed on high-RAM variants.</item>
+        <item>Small swap size. Minimal background overhead.</item>
+        <item>Standard swap size. Good balance for daily multitasking.</item>
+        <item>Optimal swap size for 4GB/6GB RAM devices.</item>
+        <item>Aggressive swap size. Better multitasking at the cost of some CPU overhead.</item>
+        <item>Large swap size. Keeps more background apps alive.</item>
+        <item>Huge swap size. Recommended for power users and heavy gaming.</item>
+        <item>Ultra swap size. For massive multitasking scenarios.</item>
+        <item>Maximum swap size. Use only on highest storage/RAM variants.</item>
+    </string-array>
 </resources>

@@ -30,6 +30,10 @@ on boot && property:ro.boot.hwname=sapphire
     setprop ro.vendor.se.type ""
 
 on boot
+    # Deep sleep / Sleep states
+    write /sys/power/mem_sleep "s2idle"
+    write /sys/devices/system/cpu/qcom_lpm/parameters/sleep_disabled N
+
     # Goodix sensor (if you have dual sensor support)
     chmod 0666 /dev/goodix_fp
     chown system system /dev/goodix_fp
@@ -82,3 +86,13 @@ on property:sys.boot_completed=1
 
 on property:ro.boot.hwname=*
     setprop ro.boot.product.hardware.sku ${ro.boot.hwname}
+
+service vendor.zram /vendor/bin/init.zram.sh
+    class late_start
+    user root
+    group root
+    disabled
+    oneshot
+
+on property:persist.vendor.zram.size=*
+    start vendor.zram

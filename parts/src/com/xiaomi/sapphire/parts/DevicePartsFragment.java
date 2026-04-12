@@ -18,9 +18,11 @@ public class DevicePartsFragment extends PreferenceFragment
 
     private ListPreference mThermalSconfig;
     private ListPreference mThermalBalance;
+    private ListPreference mZramSize;
 
     private String[] mSconfigDescriptions;
     private String[] mBalanceDescriptions;
+    private String[] mZramDescriptions;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class DevicePartsFragment extends PreferenceFragment
 
         mSconfigDescriptions = res.getStringArray(R.array.thermal_sconfig_descriptions);
         mBalanceDescriptions = res.getStringArray(R.array.thermal_balance_descriptions);
+        mZramDescriptions = res.getStringArray(R.array.zram_size_descriptions);
 
         mThermalSconfig = (ListPreference) findPreference(ThermalUtils.PREF_THERMAL_SCONFIG);
         mThermalSconfig.setValue(prefs.getString(
@@ -46,6 +49,12 @@ public class DevicePartsFragment extends PreferenceFragment
                 ThermalUtils.PREF_THERMAL_BALANCE, ThermalUtils.DEFAULT_THERMAL_BALANCE));
         updateSummary(mThermalBalance, mBalanceDescriptions);
         mThermalBalance.setOnPreferenceChangeListener(this);
+
+        mZramSize = (ListPreference) findPreference(ThermalUtils.PREF_ZRAM_SIZE);
+        mZramSize.setValue(prefs.getString(
+                ThermalUtils.PREF_ZRAM_SIZE, ThermalUtils.DEFAULT_ZRAM_SIZE));
+        updateSummary(mZramSize, mZramDescriptions);
+        mZramSize.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -63,6 +72,13 @@ public class DevicePartsFragment extends PreferenceFragment
             ThermalUtils.applyThermalBalance(value);
             mThermalBalance.setValue(value);
             updateSummary(mThermalBalance, mBalanceDescriptions);
+            return true;
+        }
+
+        if (preference == mZramSize) {
+            ThermalUtils.applyZramSize(value);
+            mZramSize.setValue(value);
+            updateSummary(mZramSize, mZramDescriptions);
             return true;
         }
 
