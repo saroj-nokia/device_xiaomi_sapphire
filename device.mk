@@ -443,6 +443,13 @@ PRODUCT_PACKAGES += \
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay-lineage
 
+# Device Parts
+#PRODUCT_PACKAGES += \
+#    DeviceParts
+
+#PRODUCT_COPY_FILES += \
+#    $(LOCAL_PATH)/parts/privapp-permissions-parts.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-parts.xml
+
 # Device-specific settings
  PRODUCT_PACKAGES += \
     XiaomiVoIPFix
@@ -659,3 +666,4 @@ PRODUCT_PACKAGES += \
     firmware_WCNSS_qcom_cfg.ini_symlink \
     firmware_wlanmdsp.mbn_symlink
     
+$(shell mkdir -p $(OUT_DIR)/target/product/$(TARGET_DEVICE)/obj/KERNEL_OBJ/usr)
