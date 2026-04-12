@@ -15,6 +15,9 @@
 /dev/goodix_fp                                                          u:object_r:vendor_fingerprint_device:s0
 /dev/xiaomi-fp                                                          u:object_r:vendor_fingerprint_device:s0
 
+# ZRAM device
+/dev/block/zram0                                                        u:object_r:zram_device:s0
+
 # Fingerprint HAL
 /(vendor|system/vendor)/bin/hw/android\.hardware\.biometrics\.fingerprint-service\.xiaomi u:object_r:hal_fingerprint_default_exec:s0
 /data/vendor/misc/xiaomi_fp(/.*)? u:object_r:vendor_fingerprint_data_file:s0

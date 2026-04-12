@@ -4,16 +4,6 @@
 - **Context Isolation:** Treat every session as a 'Cold Start'. If a previous branch exists, increment the suffix (e.g., -v2, -v3) to ensure a fresh Pull Request.
 - **State Integrity:** Perform a 'Context Flush' before initializing git operations to prevent DATA_LOSS_RISK caused by stale session cache.
 
-## MGLRU Implementation
-- **Configuration:** MGLRU is enabled via `persist.device_config.mglru_native.lru_gen_config=core` in `system.prop`.
-- **SELinux Requirements:**
-  - Type: `vendor_sysfs_mglru` in `sepolicy/vendor/file.te`.
-  - Mapping: `genfscon sysfs /kernel/mm/lru_gen u:object_r:vendor_sysfs_mglru:s0` in `sepolicy/vendor/genfs_contexts`.
-  - Permissions:
-    - `vendor_init`: `allow vendor_init vendor_sysfs_mglru:file w_file_perms;`
-    - `system_server`: `allow system_server vendor_sysfs_mglru:file r_file_perms;`
-    - `system_app`: `allow system_app vendor_sysfs_mglru:file r_file_perms;`
-
 # Agent Instructions for Branch Management and Synchronization
 
 To ensure a smooth workflow and avoid issues with closed Pull Requests, all agents working on this repository must follow these rules:
