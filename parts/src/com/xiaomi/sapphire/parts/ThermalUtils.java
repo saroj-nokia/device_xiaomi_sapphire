@@ -7,6 +7,7 @@ package com.xiaomi.sapphire.parts;
 
 import android.util.Log;
 
+import java.lang.reflect.Method;
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -58,7 +59,13 @@ public class ThermalUtils {
     }
 
     public static void applyZramSize(String value) {
-        android.os.SystemProperties.set("persist.vendor.zram.size", value);
+        try {
+            Class<?> clazz = Class.forName("android.os.SystemProperties");
+            Method method = clazz.getMethod("set", String.class, String.class);
+            method.invoke(null, "persist.vendor.zram.size", value);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to set system property", e);
+        }
     }
 
     public static void restoreSettings(android.content.Context context) {
