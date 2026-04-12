@@ -74,5 +74,11 @@ ro.vendor.radio.fastdormancy=true
 ro.vendor.radio.features_common=3
 
 # lmkd
+ro.lmk.kill_heaviest_task=true
+ro.lmk.kill_timeout_ms=100
+ro.lmk.use_minfree_levels=false
+ro.lmk.psi_partial_stall_ms=70
 ro.lmk.psi_complete_stall_ms=70
+ro.lmk.thrashing_limit=30
+ro.lmk.thrashing_limit_decay=50
 
