@@ -16,10 +16,11 @@ public class BootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (!Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
+        if (!Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction()) &&
+                !Intent.ACTION_LOCKED_BOOT_COMPLETED.equals(intent.getAction())) {
             return;
         }
-        Log.i(TAG, "Boot completed, restoring thermal settings");
+        Log.i(TAG, "Boot completed (" + intent.getAction() + "), restoring thermal settings");
         ThermalUtils.restoreSettings(context);
     }
 }

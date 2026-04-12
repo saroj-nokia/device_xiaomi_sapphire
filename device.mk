@@ -444,11 +444,11 @@ DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay-lineage
 
 # Device Parts
-#PRODUCT_PACKAGES += \
-#    DeviceParts
+PRODUCT_PACKAGES += \
+    DeviceParts
 
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_PATH)/parts/privapp-permissions-parts.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-parts.xml
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/parts/privapp-permissions-parts.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-parts.xml
 
 # Device-specific settings
  PRODUCT_PACKAGES += \
