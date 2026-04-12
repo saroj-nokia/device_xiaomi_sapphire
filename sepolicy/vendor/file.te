@@ -26,5 +26,8 @@ type vendor_sysfs_lpm, fs_type, sysfs_type;
 # Thermal
 type vendor_sysfs_thermal_message, fs_type, sysfs_type;
 
+# MGLRU
+type vendor_sysfs_mglru, fs_type, sysfs_type;
+
 type proc_net_local_unbindable_ports, fs_type, proc_type;
 

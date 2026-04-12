@@ -1,3 +1,9 @@
+## Git & Session Management Protocols
+- **Atomic Branching:** Every task must originate from the latest state of the default branch.
+- **Branch Reuse Prohibition:** Never push new commits to a branch that has already been merged or closed.
+- **Context Isolation:** Treat every session as a 'Cold Start'. If a previous branch exists, increment the suffix (e.g., -v2, -v3) to ensure a fresh Pull Request.
+- **State Integrity:** Perform a 'Context Flush' before initializing git operations to prevent DATA_LOSS_RISK caused by stale session cache.
+
 # Agent Instructions for Branch Management and Synchronization
 
 To ensure a smooth workflow and avoid issues with closed Pull Requests, all agents working on this repository must follow these rules:

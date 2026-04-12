@@ -1,2 +1,5 @@
 # Fingerprint
 type vendor_fingerprint_device, dev_type;
+
+# ZRAM
+type zram_device, dev_type;
