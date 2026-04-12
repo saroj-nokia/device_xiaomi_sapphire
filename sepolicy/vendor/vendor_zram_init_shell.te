@@ -10,7 +10,7 @@ allow vendor_zram_init_shell vendor_toolbox_exec:file rx_file_perms;
 allow vendor_zram_init_shell sysfs_zram:dir r_dir_perms;
 allow vendor_zram_init_shell sysfs_zram:file rw_file_perms;
 allow vendor_zram_init_shell block_device:dir search;
-allow vendor_zram_init_shell zram_device:blk_file rw_file_perms;
+allow vendor_zram_init_shell swap_block_device:blk_file rw_file_perms;
 
 allow vendor_zram_init_shell self:capability sys_admin;
 
