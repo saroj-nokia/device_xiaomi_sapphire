@@ -14,6 +14,9 @@ allow vendor_zram_init_shell swap_block_device:blk_file rw_file_perms;
 
 allow vendor_zram_init_shell self:capability sys_admin;
 
+# Allow logging to kmsg
+allow vendor_zram_init_shell kmsg_device:chr_file rw_file_perms;
+
 # Property access
 set_prop(vendor_zram_init_shell, vendor_zram_prop)
 get_prop(vendor_zram_init_shell, vendor_zram_prop)

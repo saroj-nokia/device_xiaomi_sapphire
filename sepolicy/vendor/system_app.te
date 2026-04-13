@@ -12,6 +12,9 @@ allow system_app hal_sensors_default:binder call;
 allow system_app activity_service:service_manager find;
 allow system_app activity_task_service:service_manager find;
 
+# ZRAM
+set_prop(system_app, vendor_zram_prop)
+
 binder_call(system_app, hal_audio_default)
 binder_call(system_app, hal_health_default)
 binder_call(system_app, hal_ir_default)

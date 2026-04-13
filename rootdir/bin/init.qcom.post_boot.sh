@@ -821,6 +821,13 @@ KernelVersionA=${KernelVersionStr:0:1}
 KernelVersionB=${KernelVersionS%.*}
 
 function configure_zram_parameters() {
+    # If a custom ZRAM size is set, skip default configuration
+    # The vendor.zram service will handle it.
+    zram_custom_size=`getprop persist.vendor.zram.size`
+    if [ ! -z "$zram_custom_size" ]; then
+        return
+    fi
+
     MemTotalStr=`cat /proc/meminfo | grep MemTotal`
     MemTotal=${MemTotalStr:16:8}
 
