@@ -21,4 +21,4 @@ ro.vendor.ril.svdo  u:object_r:vendor_radio_prop:s0
 ro.vendor.camera.res.fmq.size  u:object_r:vendor_camera_res_prop:s0
 
 # ZRAM
-persist.vendor.zram.size  u:object_r:vendor_zram_prop:s0
+persist.vendor.zram_size  u:object_r:vendor_zram_prop:s0
