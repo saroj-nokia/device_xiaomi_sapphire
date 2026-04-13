@@ -94,5 +94,8 @@ service vendor.zram /vendor/bin/init.zram.sh
     disabled
     oneshot
 
+on boot && property:persist.vendor.zram.size=*
+    start vendor.zram
+
 on property:persist.vendor.zram.size=*
     start vendor.zram
