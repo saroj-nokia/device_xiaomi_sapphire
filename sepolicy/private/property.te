@@ -1,1 +1,3 @@
 typeattribute vendor_camera_res_prop vendor_restricted_property_type;
+
+system_public_prop(system_zram_prop)

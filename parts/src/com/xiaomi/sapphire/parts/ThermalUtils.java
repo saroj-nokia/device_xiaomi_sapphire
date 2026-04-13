@@ -62,7 +62,7 @@ public class ThermalUtils {
         try {
             Class<?> clazz = Class.forName("android.os.SystemProperties");
             Method method = clazz.getMethod("set", String.class, String.class);
-            method.invoke(null, "persist.vendor.zram.size", value);
+            method.invoke(null, "persist.sys.zram_size", value);
         } catch (Exception e) {
             Log.e(TAG, "Failed to set system property", e);
         }

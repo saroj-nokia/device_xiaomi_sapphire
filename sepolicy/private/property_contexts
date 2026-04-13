@@ -12,3 +12,5 @@ ro.fota.oem                    u:object_r:exported_system_prop:s0
 ro.wlan.bdf                    u:object_r:vendor_public_vendor_default_prop:s0
 ro.wlan.chip                   u:object_r:vendor_public_vendor_default_prop:s0
 
+# ZRAM
+persist.sys.zram_size          u:object_r:system_zram_prop:s0
