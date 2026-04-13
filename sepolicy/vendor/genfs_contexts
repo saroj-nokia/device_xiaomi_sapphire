@@ -13,6 +13,12 @@ genfscon sysfs /devices/platform/soc/soc:qcom,nopmi-chg/qcom-battery/odm_battery
 # Battery wakeup nodes
 genfscon sysfs /devices/platform/soc/soc:qcom,nopmi-chg/power_supply/battery/wakeup u:object_r:sysfs_wakeup:s0
 genfscon sysfs /devices/platform/soc/soc:qcom,nopmi-chg/power_supply/usb/wakeup u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/1c40000.qcom,spmi/spmi-0/0-02/1c40000.qcom,spmi:qcom,pm7250b@2:qcom,usb-pdphy@1700/Charging_Adapter/pd_adapter/wakeup u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/1c40000.qcom,spmi/spmi-0/0-02/1c40000.qcom,spmi:qcom,pm7250b@2:qcom,usb-pdphy@1700/Charging_Adapter/pd_adapter/wakeup30 u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/power_supply/batt_verify/wakeup u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/virtual/power_supply/batt_verify/wakeup17 u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/4ac0000.qcom,qupv3_0_geni_se/4a84000.i2c/i2c-0/0-0065/power_supply/ti-cp-standalone/wakeup u:object_r:sysfs_wakeup:s0
+genfscon sysfs /devices/platform/soc/4ac0000.qcom,qupv3_0_geni_se/4a84000.i2c/i2c-0/0-0065/power_supply/ti-cp-standalone/wakeup13 u:object_r:sysfs_wakeup:s0
 
 # DT2W
 genfscon proc /tp_gesture                                                      u:object_r:proc_tp_gesture:s0

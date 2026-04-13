@@ -6,6 +6,10 @@ dontaudit system_app tracingproxy_service:service_manager { find };
 # Allow privileged system apps to read Incremental FS properties
 get_prop(system_app, incremental_prop)
 
+binder_call(system_app, storaged)
+binder_call(system_app, system_suspend)
+binder_call(system_app, vold)
+
 # Allow system apps to check supported filesystems
 allow system_app proc_filesystems:file r_file_perms;
 

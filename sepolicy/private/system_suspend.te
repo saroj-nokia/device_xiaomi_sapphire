@@ -4,6 +4,7 @@ allow system_suspend sysfs_net:dir { open read };
 allow system_suspend sysfs_net:file { open read };
 allow system_suspend sysfs_rtc:dir { open  read };
 allow system_suspend sysfs_rtc:file { getattr  open  read };
+allow system_suspend same_process_hal_file:file { read open getattr };
 allow system_suspend sysfs_suspend_stats:file { getattr open read };
 allow system_suspend sysfs_wakeup:dir { open read search getattr };
 allow system_suspend sysfs_wakeup:file { open read getattr };
