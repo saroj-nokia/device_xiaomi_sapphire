@@ -8,3 +8,6 @@ get_prop(system_app, incremental_prop)
 
 # Allow system apps to check supported filesystems
 allow system_app proc_filesystems:file r_file_perms;
+
+# ZRAM
+set_prop(system_app, system_zram_prop)
