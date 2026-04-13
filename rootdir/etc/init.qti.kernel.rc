@@ -72,7 +72,7 @@ on early-boot
     # Allow subsystem (modem etc) debugging
     exec_background u:r:vendor_qti_init_shell_bg:s0 -- /vendor/bin/init.qti.write.sh /sys/kernel/boot_adsp/boot 1
     exec_background u:r:vendor_qti_init_shell_bg:s0 -- /vendor/bin/init.qti.write.sh /sys/kernel/boot_cdsp/boot 1
-    exec_background u:r:vendor_qti_init_shell_bg:s0 -- /vendor/bin/init.qti.write.sh /sys/devices/virtual/cvp/cvp/boot 1
+    # exec_background u:r:vendor_qti_init_shell_bg:s0 -- /vendor/bin/init.qti.write.sh /sys/devices/virtual/cvp/cvp/boot 1 # CVP/EVA driver not found in kernel, causes 61s boot delay
 
 on boot
     # Allow access to dload sysfs node
