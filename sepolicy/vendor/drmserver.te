@@ -1,1 +1,1 @@
-allow drmserver same_process_hal_file:file { read open getattr };
+allow drmserver same_process_hal_file:file { read open getattr map execute };
