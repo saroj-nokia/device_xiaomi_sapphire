@@ -86,6 +86,13 @@
             <Limit name="bitrate" range="5200-48000" />
             <Limit name="concurrent-instances" max="2" />
         </MediaCodec>
+        <!-- Dolby AC4 Decoders -->
+        <MediaCodec name="c2.dolby.ac4.decoder" type="audio/ac4" rank="0">
+            <Limit name="channel-count" max="8" />
+            <Limit name="sample-rate" ranges="8000-96000" />
+            <Limit name="bitrate" range="1-2000000" />
+            <Limit name="concurrent-instances" max="2" />
+        </MediaCodec>
     </Decoders>
     <Encoders>
         <!-- C2 audio encoders -->
