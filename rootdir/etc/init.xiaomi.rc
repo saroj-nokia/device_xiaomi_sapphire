@@ -1,7 +1,6 @@
-# Remove the wrong early-boot section
-# on early-boot
-#     chmod 0664 /sys/bus/platform/devices/soc:xiaomi_fingerprint/fingerdown
-#     chown system graphics /sys/bus/platform/devices/soc:xiaomi_fingerprint/fingerdown
+on early-boot
+    chmod 0664 /sys/bus/platform/devices/soc:xiaomi_fingerprint/fingerdown
+    chown system graphics /sys/bus/platform/devices/soc:xiaomi_fingerprint/fingerdown
 
 on post-fs-data
     mkdir /data/vendor/misc 01771 system system
@@ -21,54 +20,70 @@ on post-fs && property:ro.boot.hwname=sapphiren
     setprop ro.vendor.se.type HCE,UICC
     setprop ro.nfc.port I2C
 
+# For the NFC variant (sapphiren) - data directory setup
+# This must be on post-fs-data as it creates a directory in /data
 on post-fs-data && property:ro.boot.hwname=sapphiren
     mkdir /data/vendor/nfc 0770 nfc nfc
 
 # For the non-NFC variant (sapphire)
+# It's crucial to stop nfc_hal_service as early as possible if it auto-starts.
+# 'on boot' is generally earlier than 'on post-fs' for service class initialization.
 on boot && property:ro.boot.hwname=sapphire
+    # Explicitly stop the NFC HAL service for the non-NFC variant.
+    # This prevents it from running if it auto-starts due to its source definition.
     stop vendor.st_nfc_hal_service
+    # Optionally, explicitly clear the SE type property for non-NFC variants.
     setprop ro.vendor.se.type ""
 
 on boot
-    # Goodix sensor (if you have dual sensor support)
     chmod 0666 /dev/goodix_fp
     chown system system /dev/goodix_fp
-    
-    # Xiaomi fingerprint device
     chmod 0666 /dev/xiaomi-fp
     chown system system /dev/xiaomi-fp
-    
-    # FOD press detection - CRITICAL for screen-off UDFPS
-    chmod 0664 /sys/class/touch/touch_dev/fod_press_status
-    chown system graphics /sys/class/touch/touch_dev/fod_press_status
-    
-    # Wakeup source
-    chown system system /sys/devices/platform/soc/soc:fingerprint_xiaomi/wakeup/wakeup7/active
-    chmod 0660 /sys/devices/platform/soc/soc:fingerprint_xiaomi/wakeup/wakeup7/active
-    
-    # Touch test
-    chmod 0664 /sys/class/touch/touch_dev/touch_dfs_test
-    chown system system /sys/class/touch/touch_dev/touch_dfs_test
-
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/irq
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/irq_enable
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/wakeup_enable
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/hw_reset
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/device_prepare
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/fingerdown_wait
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/vendor
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/request_vreg
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/simulate_irq
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/finger_irq
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/power_cfg
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/power_ctrl
+    chown system system /sys/bus/platform/devices/soc:fingerprint_fpc/screen
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/irq
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/wakeup_enable
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/hw_reset
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/device_prepare
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/vendor
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/request_vreg
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/simulate_irq
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/finger_irq
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/power_cfg
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/power_ctrl
+    chmod 0700 /sys/bus/platform/devices/soc:fingerprint_fpc/screen
     chmod 0666 /dev/input/event2
+    chown system system /sys/bus/platform/devices/soc:fpc1020/irq
+    chown system system /sys/bus/platform/devices/soc:fpc1020/wakeup_enable
+    chown system system /sys/bus/platform/devices/soc:fpc1020/modalias
+    chown system system /sys/bus/platform/devices/soc:fpc1020/compatible_all
+    chmod 0660 /sys/bus/platform/devices/soc:fpc1020/irq
+    chmod 0660 /sys/bus/platform/devices/soc:fpc1020/wakeup_enable
+    chmod 0660 /sys/bus/platform/devices/soc:fpc1020/modalias
+    chmod 0660 /sys/bus/platform/devices/soc:fpc1020/compatible_all
 
 on property:sys.boot_completed=1
+    # Only owner can acces this node
     chmod 440 /proc/net/unix
 
-service vendor.st_nfc_hal_service /vendor/bin/hw/android.hardware.nfc@1.2-service.st
-    override
-    class hal
-    user nfc
-    group nfc
-    disabled
-
 service stflashtool /vendor/bin/STFlashTool
-    override
     class late_start
     group nfc
     user nfc
-    oneshot
     disabled
+    oneshot
 
 service vendor.goodix-events /vendor/bin/init.goodix.events.sh
     class late_start
