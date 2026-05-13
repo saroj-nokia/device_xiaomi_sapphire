@@ -471,11 +471,11 @@
     <string name="config_dozeUdfpsLongPressSensorType" translatable="false">org.lineageos.sensor.udfps</string>
     
     <!-- Whether to enable fp unlock when screen turns off on udfps devices -->
-    <bool name="config_screen_off_udfps_enabled">false</bool>
+    <bool name="config_screen_off_udfps_enabled">true</bool>
 
     <!-- Default value for fp screen off unlock toggle, it only works for the devices that support
          fp screen off unlock-->
-	<bool name="config_screen_off_udfps_default_on">false</bool>
+	<bool name="config_screen_off_udfps_default_on">true</bool>
     
     <!-- Enables or disables haptic effect when the text insertion/selection handle is moved
          manually by the user. Off by default, since the expected haptic feedback may not be
