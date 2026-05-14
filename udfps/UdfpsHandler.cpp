@@ -46,6 +46,7 @@
 
 #define DISP_FEATURE_PATH "/dev/mi_display/disp_feature"
 #define FOD_PRESS_STATUS_PATH "/sys/class/touch/touch_dev/fod_press_status"
+#define BRIGHTNESS_PATH "/sys/class/backlight/panel0-backlight/brightness"
 
 using ::aidl::android::hardware::biometrics::fingerprint::AcquiredInfo;
 
@@ -75,7 +76,7 @@ static disp_event_resp* parseDispEvent(int fd) {
         return nullptr;
     }
 
-    if (size < sizeof(struct disp_event)) {
+    if (size < (ssize_t)sizeof(struct disp_event)) {
         LOG(ERROR) << "Invalid event size " << size << ", expect at least "
                    << sizeof(struct disp_event);
         return nullptr;
@@ -97,9 +98,9 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
 
     void init(fingerprint_device_t* device) {
         LOG(INFO) << "Initializing UDFPS handler";
-
+        
         mDevice = device;
-
+        
         // Open device nodes
         touch_fd_ = android::base::unique_fd(open(TOUCH_DEV_PATH, O_RDWR));
         if (touch_fd_.get() < 0) {
@@ -119,16 +120,17 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
         // Start monitoring threads
         fodThread_ = std::thread([this]() { fodPressMonitorThread(); });
         dispThread_ = std::thread([this]() { displayEventMonitorThread(); });
+        
+        // PARCHE MINIMALISTA: Añadimos el centinela de brillo SOLO para FPC
+        if (isFpcFod) {
+            screenThread_ = std::thread([this]() { screenStateMonitorThread(); });
+        }
 
-        LOG(INFO) << "UDFPS handler initialized, isFpcFod=" << isFpcFod;
+        LOG(INFO) << "UDFPS handler initialized";
     }
 
     void onFingerDown(uint32_t /*x*/, uint32_t /*y*/, float /*minor*/, float /*major*/) {
         LOG(INFO) << __func__;
-
-        // Mark auth session as active — from this point fodPressMonitorThread
-        // is allowed to forward fod_press_status events to setFingerDown.
-        isAuthSessionActive.store(true);
 
         /*
          * On fpc_fod devices, enable FOD status when finger down is detected
@@ -143,17 +145,12 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
 
     void onFingerUp() {
         LOG(INFO) << __func__;
-
-        // Clear auth session flag before calling setFingerDown so that
-        // any spurious fod_press_status events after finger-up are ignored.
-        isAuthSessionActive.store(false);
-
         setFingerDown(false);
     }
 
     void onAcquired(int32_t result, int32_t vendorCode) {
         LOG(INFO) << __func__ << " result: " << result << " vendorCode: " << vendorCode;
-
+        
         if (static_cast<AcquiredInfo>(result) == AcquiredInfo::GOOD) {
             // Disable HBM on successful acquisition
             {
@@ -166,7 +163,7 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
                     ioctl(disp_fd_.get(), MI_DISP_IOCTL_SET_LOCAL_HBM, &req);
                 }
             }
-
+            
             if (!enrolling.load()) {
                 setFodStatus(FOD_STATUS_OFF);
             }
@@ -187,7 +184,6 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
 
     void cancel() {
         LOG(INFO) << __func__;
-        isAuthSessionActive.store(false);
         enrolling.store(false);
         setFodStatus(FOD_STATUS_OFF);
     }
@@ -214,10 +210,6 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
     android::base::unique_fd disp_fd_;
     std::atomic<bool> enrolling{false};
     std::atomic<bool> isRunning{true};
-    // Tracks whether the framework has an active auth session.
-    // fodPressMonitorThread only forwards events to setFingerDown when this is true,
-    // preventing spurious LHBM activations outside of authentication.
-    std::atomic<bool> isAuthSessionActive{false};
     bool isFpcFod;
 
     // Mutexes for thread safety
@@ -228,24 +220,63 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
     // Thread objects
     std::thread fodThread_;
     std::thread dispThread_;
+    std::thread screenThread_; // Hilo centinela
+
+    int getBrightness() {
+        int fd = open(BRIGHTNESS_PATH, O_RDONLY);
+        if (fd < 0) return -1;
+        char buf[12];
+        ssize_t len = read(fd, buf, sizeof(buf) - 1);
+        close(fd);
+        if (len <= 0) return -1;
+        buf[len] = '\0';
+        return atoi(buf);
+    }
+
+    void screenStateMonitorThread() {
+        int lastState = -1;
+        while (isRunning.load()) {
+            int brightness = getBrightness();
+            if (brightness != -1) {
+                int currentState = (brightness == 0) ? 0 : 1;
+                if (currentState != lastState) {
+                    if (currentState == 0 && isFpcFod) {
+                        // Pantalla apagada: Mantenemos el panel vivo para que tu módulo Magisk funcione
+                        setFodStatus(FOD_STATUS_ON);
+                    } else if (currentState == 1 && isFpcFod) {
+                        // Pantalla encendida: Apagamos el modo FOD para evitar fogonazos (si no estamos registrando huella)
+                        if (!enrolling.load()) {
+                            setFodStatus(FOD_STATUS_OFF);
+                        }
+                    }
+                    lastState = currentState;
+                }
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        }
+    }
 
     void shutdownThreads() {
         isRunning.store(false);
+        // Join threads if they are running
         if (fodThread_.joinable()) {
             fodThread_.join();
         }
         if (dispThread_.joinable()) {
             dispThread_.join();
         }
+        if (screenThread_.joinable()) {
+            screenThread_.join();
+        }
     }
 
     void fodPressMonitorThread() {
         LOG(INFO) << "FOD press monitor thread started";
-
+        
         int fd = open(FOD_PRESS_STATUS_PATH, O_RDONLY);
         if (fd < 0) {
-            LOG(ERROR) << "Failed to open " << FOD_PRESS_STATUS_PATH
-                      << ", error: " << strerror(errno);
+            LOG(ERROR) << "Failed to open " << FOD_PRESS_STATUS_PATH 
+                       << ", error: " << strerror(errno);
             return;
         }
 
@@ -259,8 +290,8 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
         };
 
         while (isRunning.load()) {
-            int rc = poll(&fodPressStatusPoll, 1, 1000);
-
+            int rc = poll(&fodPressStatusPoll, 1, 1000);  // 1 second timeout
+            
             if (rc < 0) {
                 if (errno == EINTR) continue;
                 LOG(ERROR) << "Poll failed: " << strerror(errno);
@@ -268,9 +299,11 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
             }
 
             if (rc == 0) {
+                // Timeout - check if we should continue
                 continue;
             }
 
+            // Check for expected events
             if (!(fodPressStatusPoll.revents & (POLLERR | POLLPRI))) {
                 if (fodPressStatusPoll.revents & (POLLHUP | POLLNVAL)) {
                     LOG(ERROR) << "Poll error event: " << fodPressStatusPoll.revents;
@@ -280,19 +313,11 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
                 continue;
             }
 
+            // Clear revents
             fodPressStatusPoll.revents = 0;
 
             const bool pressed = readBool(fd);
             LOG(DEBUG) << "fod_press_status changed: " << (pressed ? "pressed" : "released");
-
-            // Only forward the event when there is an active auth session.
-            // This prevents the LHBM from lighting up on random touches over
-            // the FOD area when the screen is on but no authentication is running.
-            if (pressed && !isAuthSessionActive.load()) {
-                LOG(DEBUG) << "fod_press_status pressed outside auth session, ignoring";
-                continue;
-            }
-
             setFingerDown(pressed);
         }
 
@@ -302,11 +327,11 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
 
     void displayEventMonitorThread() {
         LOG(INFO) << "Display event monitor thread started";
-
+        
         int fd = open(DISP_FEATURE_PATH, O_RDWR);
         if (fd < 0) {
-            LOG(ERROR) << "Failed to open " << DISP_FEATURE_PATH
-                      << ", error: " << strerror(errno);
+            LOG(ERROR) << "Failed to open " << DISP_FEATURE_PATH 
+                       << ", error: " << strerror(errno);
             return;
         }
 
@@ -328,8 +353,8 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
         };
 
         while (isRunning.load()) {
-            int rc = poll(&dispEventPoll, 1, 1000);
-
+            int rc = poll(&dispEventPoll, 1, 1000);  // 1 second timeout
+            
             if (rc < 0) {
                 if (errno == EINTR) continue;
                 LOG(ERROR) << "Display poll failed: " << strerror(errno);
@@ -337,9 +362,11 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
             }
 
             if (rc == 0) {
+                // Timeout
                 continue;
             }
 
+            // Check for expected events
             if (!(dispEventPoll.revents & POLLIN)) {
                 if (dispEventPoll.revents & (POLLERR | POLLHUP | POLLNVAL)) {
                     LOG(ERROR) << "Display poll error: " << dispEventPoll.revents;
@@ -349,6 +376,7 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
                 continue;
             }
 
+            // Clear revents
             dispEventPoll.revents = 0;
 
             struct disp_event_resp* response = parseDispEvent(fd);
@@ -365,7 +393,7 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
             LOG(DEBUG) << "Display event data: 0x" << std::hex << value;
 
             bool localHbmUiReady = value & LOCAL_HBM_UI_READY;
-
+            
             std::lock_guard<std::mutex> lock(device_mutex_);
             if (mDevice != nullptr) {
                 mDevice->extCmd(mDevice, COMMAND_NIT,
@@ -379,7 +407,7 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
 
     void setFodStatus(int value) {
         std::lock_guard<std::mutex> lock(touch_mutex_);
-
+        
         if (touch_fd_.get() < 0) {
             LOG(ERROR) << "Touch device not opened";
             return;
