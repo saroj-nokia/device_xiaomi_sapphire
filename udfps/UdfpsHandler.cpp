@@ -373,8 +373,35 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
 
             // SECURITY: Only send touch event if Screen-Off is enabled or screen is on
             bool isScreenOffEnabled = android::base::GetBoolProperty("persist.vendor.sys.fp.screen_off", true);
-            if (!isScreenOffEnabled && getBrightness() == 0) {
+            bool screenOff = (getBrightness() == 0);
+            if (!isScreenOffEnabled && screenOff) {
                 LOG(INFO) << "UDFPS: Touch ignored, Screen-Off feature disabled.";
+                continue;
+            }
+
+            /*
+             * ANTI-FALSE POSITIVE: this thread only exists to allow the
+             * sensor to wake up the device with the screen turned OFF (the raw
+             * fod_press_status node is triggered by hardware with any
+             * touch in that physical zone, regardless of what is on screen).
+             *
+             * Unlocking with the screen turned ON already works reliably
+             * via onFingerDown()/onFingerUp(), which the framework only
+             * invokes when the touch actually falls on the UDFPS icon/overlay.
+             * Forwarding "pressed" events here as well with the screen turned
+             * on is what caused the HBM to light up when pressing the "0" on the
+             * PIN pad, pulling down the control center, or hanging up a
+             * call: those touches fall on the same physical zone of the
+             * sensor by pure layout coincidence, not because the user
+             * intended to use the fingerprint scanner.
+             *
+             * "Released" events are always forwarded to avoid leaving the HBM/
+             * finger-down state hung if the screen changes state mid-gesture.
+             */
+
+            if (pressed && !screenOff) {
+                LOG(DEBUG) << "UDFPS: Raw touch ignored with screen on"
+                              "(not a real touch on the fingerprint icon)";
                 continue;
             }
 
