@@ -398,7 +398,6 @@ class XiaomiSm6225UdfpsHandler : public UdfpsHandler {
              * "Released" events are always forwarded to avoid leaving the HBM/
              * finger-down state hung if the screen changes state mid-gesture.
              */
-
             if (pressed && !screenOff) {
                 LOG(DEBUG) << "UDFPS: Raw touch ignored with screen on"
                               "(not a real touch on the fingerprint icon)";
