@@ -168,9 +168,9 @@ function configure_memory_parameters() {
 
     # Set the min_free_kbytes to standard kernel value
     if [ $RamSizeGB -ge 8 ]; then
-		echo 11584 > /proc/sys/vm/min_free_kbytes
+		echo 65536 > /proc/sys/vm/min_free_kbytes
     elif [ $RamSizeGB -ge 4 ]; then
-		echo 8192 > /proc/sys/vm/min_free_kbytes
+		echo 65536 > /proc/sys/vm/min_free_kbytes
     elif [ $RamSizeGB -ge 2 ]; then
 		echo 5792 > /proc/sys/vm/min_free_kbytes
     else
