@@ -7,6 +7,7 @@ persist.audio.button_jack.switch=0
 ro.vendor.audio.notification.single=true
 tunnel.audio.encode=true
 use.voice.path.for.pcm.voip=true
+qcom.hw.aac.encoder=true
 
 # Bluetooth
 persist.vendor.btstack.aac_frm_ctl.enabled=true
@@ -110,3 +111,11 @@ ro.opengles.version=196610
 
 # SSR
 persist.vendor.ssr.restart_level=ALL_ENABLE
+
+#
+# system props for the data modules
+#
+ro.vendor.use_data_netmgrd=true
+persist.vendor.data.mode=concurrent
+#system props for time-services
+persist.timed.enable=true
