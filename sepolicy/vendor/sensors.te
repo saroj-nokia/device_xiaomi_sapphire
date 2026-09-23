@@ -1,0 +1,2 @@
+allow vendor_sensors vendor_qdsp_device:chr_file { ioctl read write open };
+allowxperm vendor_sensors vendor_qdsp_device:chr_file ioctl { 0x520c 0x5208 };
