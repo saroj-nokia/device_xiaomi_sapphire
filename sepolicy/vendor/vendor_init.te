@@ -10,6 +10,8 @@ allow vendor_init vendor_dmabuf_qseecom_ta_heap_device:chr_file rw_file_perms;
 allow vendor_init vendor_qce_device:chr_file ioctl;
 allow vendor_init vendor_qce_device:chr_file rw_file_perms;
 allow vendor_init vendor_qg_device:chr_file getattr;
+allow vendor_init device:chr_file { getattr relabelfrom };
+allow vendor_init miev_device:chr_file { getattr setattr create relabelto };
 
 set_prop(vendor_init, vendor_fp_prop)
 set_prop(vendor_init, vendor_fp_info_prop)

@@ -54,5 +54,7 @@
 # Label device node of tee_device
 /dev/tee0 u:object_r:tee_device:s0
 
+/dev/miev    u:object_r:miev_device:s0
+
 /sys/class/wakeup(/.*)?          u:object_r:sysfs_wakeup:s0
 /sys/devices/.*wakeup/.* u:object_r:sysfs_wakeup:s0
