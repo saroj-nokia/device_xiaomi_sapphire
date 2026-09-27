@@ -1,5 +1,5 @@
 allow vendor_hvdcp sysfs_batteryinfo:dir search;
-allow vendor_hvdcp kmsg_device:chr_file { getattr write };
+allow vendor_hvdcp kmsg_device:chr_file { getattr write open read };
 r_dir_file(vendor_hvdcp, vendor_sysfs_battery_supply)
 r_dir_file(vendor_hvdcp, vendor_sysfs_iio)
 rw_dir_file(vendor_hvdcp, sysfs)
