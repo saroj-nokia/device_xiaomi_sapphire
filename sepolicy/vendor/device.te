@@ -1,2 +1,3 @@
 # Fingerprint
 type vendor_fingerprint_device, dev_type;
+type miev_device, dev_type;
