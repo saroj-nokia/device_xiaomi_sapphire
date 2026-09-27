@@ -12,6 +12,6 @@ vendor_public_prop(vendor_fp_prop)
 
 # WiFi
 vendor_public_prop(vendor_wifimac_prop)
-type custom_version_prop, property_type;
-type misctrl_prop, property_type;
+type custom_version_prop, property_type, vendor_property_type;
+type misctrl_prop, property_type, vendor_property_type;
 
