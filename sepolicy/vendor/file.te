@@ -21,5 +21,7 @@ type sysfs_mem_sleep, fs_type, sysfs_type;
 
 type sysfs_power_supply, fs_type, sysfs_type;
 
+type modem_tombstone_data_file, file_type, data_file_type;
+
 type proc_net_local_unbindable_ports, fs_type, proc_type;
 

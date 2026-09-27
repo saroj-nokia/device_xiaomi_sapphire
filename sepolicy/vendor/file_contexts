@@ -56,5 +56,7 @@
 
 /dev/miev    u:object_r:miev_device:s0
 
+/data/tombstones/modem(/.*)?    u:object_r:modem_tombstone_data_file:s0
+
 /sys/class/wakeup(/.*)?          u:object_r:sysfs_wakeup:s0
 /sys/devices/.*wakeup/.* u:object_r:sysfs_wakeup:s0

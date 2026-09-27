@@ -12,6 +12,8 @@ allow vendor_init vendor_qce_device:chr_file rw_file_perms;
 allow vendor_init vendor_qg_device:chr_file getattr;
 allow vendor_init device:chr_file { getattr relabelfrom };
 allow vendor_init miev_device:chr_file { getattr setattr create relabelto };
+allow vendor_init tombstone_data_file:dir search;
+allow vendor_init modem_tombstone_data_file:dir { create_dir_perms relabelto };
 
 set_prop(vendor_init, vendor_fp_prop)
 set_prop(vendor_init, vendor_fp_info_prop)
