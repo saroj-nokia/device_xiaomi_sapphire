@@ -40,6 +40,9 @@ TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_VARIANT := generic
 
+# Assert
+TARGET_OTA_ASSERT_DEVICE := sapphire,sapphiren
+
 # Audio
 
 AUDIO_FEATURE_ENABLED_DLKM := true
