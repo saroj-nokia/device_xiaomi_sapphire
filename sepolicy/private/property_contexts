@@ -1,3 +1,7 @@
+# Bluetooth
+ro.ril.oem.btmac               u:object_r:vendor_btmac_prop:s0
+persist.ro.ril.oem.btmac       u:object_r:vendor_btmac_prop:s0
+
 # Fingerprint
 gf.debug.                      u:object_r:vendor_fp_prop:s0
 

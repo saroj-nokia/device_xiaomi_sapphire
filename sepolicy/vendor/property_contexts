@@ -19,8 +19,6 @@ ro.vendor.ril.svlte1x  u:object_r:vendor_radio_prop:s0
 ro.vendor.ril.svdo  u:object_r:vendor_radio_prop:s0
 
 persist.vendor.bt.a2dp_offload_cap  u:object_r:vendor_bluetooth_prop:s0
-persist.ro.ril.oem.btmac    u:object_r:vendor_ril_prop:s0
-ro.ril.oem.btmac            u:object_r:vendor_ril_prop:s0
 ro.telephony.sim_slots.count                 u:object_r:radio_prop:s0
 
 
