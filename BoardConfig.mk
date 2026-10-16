@@ -219,7 +219,7 @@ ENABLE_VENDOR_RIL_SERVICE := true
 
 # Fingerprint
 TARGET_USES_FOD_ZPOS := true
-TARGET_SURFACEFLINGER_UDFPS_LIB := //hardware/xiaomi:libudfps_extension.xiaomi
+$(call soong_config_set,surfaceflinger,udfps_lib,//hardware/xiaomi:libudfps_extension.xiaomi)
 
 # Security
 BOOT_SECURITY_PATCH := 2026-09-01
