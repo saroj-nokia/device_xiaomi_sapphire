@@ -18,14 +18,7 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 -include vendor/lineage-priv/keys/keys.mk
 
 # Gapps
--include vendor/gms/products/gms.mk
-
-# Gapps config
-TARGET_SUPPORTS_GOOGLE_RECORDER := true
-TARGET_INCLUDE_STOCK_ARCORE := true
-TARGET_INCLUDE_GOOGLE_COMMS := true
-TARGET_INCLUDE_PIXEL_LAUNCHER := true
-TARGET_INCLUDE_LIVE_WALLPAPERS := false
+-include vendor/gapps/arm64/arm64-vendor.mk
 
 # AudioFX
 TARGET_EXCLUDES_AUDIOFX := true
