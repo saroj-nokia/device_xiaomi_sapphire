@@ -1489,6 +1489,10 @@ vendor/lib64/vendor.qti.hardware.qccvndhal@1.0.so;MODULE_SUFFIX=_vendor
 vendor/bin/init.qti.qcv.sh
 vendor/etc/init/init.qti.qcv.rc
 
+# Required-QCC Protobuf
+system/lib64/libprotobuf-cpp-full.so:system_ext/lib64/libprotobuf-cpp-full-fromvendor.so
+system/lib64/libprotobuf-cpp-lite.so:system_ext/lib64/libprotobuf-cpp-lite-fromvendor.so
+
 # QMI
 vendor/bin/qmipriod
 vendor/etc/init/qmipriod.debug.rc
