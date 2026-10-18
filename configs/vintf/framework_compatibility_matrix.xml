@@ -1,7 +1,7 @@
 <compatibility-matrix version="5.0" type="framework">
     <hal format="aidl" optional="true">
         <name>android.hardware.bluetooth.audio</name>
-        <version>4</version>
+        <version>5</version>
         <interface>
             <name>IBluetoothAudioProviderFactory</name>
             <instance>default</instance>
@@ -56,7 +56,7 @@
     </hal>
     <hal format="aidl" optional="true">
         <name>android.hardware.power</name>
-        <version>5</version>
+        <version>6</version>
         <interface>
             <name>IPower</name>
             <instance>default</instance>
@@ -64,7 +64,7 @@
     </hal>
     <hal format="aidl" optional="true">
         <name>android.hardware.thermal</name>
-        <version>1</version>
+        <version>2</version>
         <interface>
             <name>IThermal</name>
             <instance>default</instance>
@@ -101,7 +101,7 @@
     </hal>
     <hal format="aidl" optional="true">
         <name>android.hardware.wifi</name>
-        <version>2</version>
+        <version>3</version>
         <interface>
             <name>IWifi</name>
             <instance>default</instance>
@@ -109,7 +109,7 @@
     </hal>
     <hal format="aidl" optional="true">
         <name>android.hardware.wifi.hostapd</name>
-        <version>2</version>
+        <version>3</version>
         <interface>
             <name>IHostapd</name>
             <instance>default</instance>
@@ -117,7 +117,7 @@
     </hal>
     <hal format="aidl" optional="true">
         <name>android.hardware.wifi.supplicant</name>
-        <version>3</version>
+        <version>4</version>
         <interface>
             <name>ISupplicant</name>
             <instance>default</instance>
@@ -272,7 +272,7 @@
     </hal>
     <hal format="aidl" optional="false">
         <name>android.hardware.health</name>
-        <version>3</version>
+        <version>4</version>
         <interface>
             <name>IHealth</name>
             <instance>default</instance>
@@ -280,7 +280,7 @@
     </hal>
     <hal format="aidl" optional="false">
         <name>android.hardware.sensors</name>
-        <version>2</version>
+        <version>3</version>
         <interface>
             <name>ISensors</name>
             <instance>default</instance>
@@ -1078,26 +1078,6 @@
         <name>android.hardware.graphics.allocator</name>
         <interface>
             <name>IAllocator</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
-    <hal format="aidl" optional="true">
-        <name>vendor.lineage.health</name>
-        <version>2</version>
-        <interface>
-            <name>IChargingControl</name>
-            <instance>default</instance>
-        </interface>
-        <interface>
-            <name>IFastCharge</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
-    <hal format="aidl" optional="true">
-        <name>vendor.lineage.livedisplay</name>
-        <version>1</version>
-        <interface>
-            <name>IPictureAdjustment</name>
             <instance>default</instance>
         </interface>
     </hal>
