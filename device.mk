@@ -376,13 +376,13 @@ PRODUCT_PACKAGES += \
 $(call soong_config_set, lineage_health, charging_control_charging_path, /sys/class/qcom-battery/input_suspend)
 $(call soong_config_set, lineage_health, charging_control_charging_enabled, 0)
 $(call soong_config_set, lineage_health, charging_control_charging_disabled, 1)
-$(call soong_config_set, lineage_health, charging_control_supports_bypass, false)
+$(call soong_config_set_bool, lineage_health, charging_control_supports_bypass, false)
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
     vendor.lineage.livedisplay-service.sdm
 
-$(call soong_config_set,livedisplay_sdm,enable_dm,false)
+$(call soong_config_set_bool,livedisplay_sdm,enable_dm,false)
 
 # Media
 PRODUCT_PACKAGES += \
@@ -403,7 +403,7 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
 
-$(call soong_config_set,stagefright,target_disable_thumbnail_block_model,true)
+$(call soong_config_set_bool,stagefright,target_disable_thumbnail_block_model,true)
 
 # Memtrack
 PRODUCT_PACKAGES += \

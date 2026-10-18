@@ -68,7 +68,7 @@ $(call soong_config_set, ufsbsg, ufsframework, bsg)
 TARGET_BOOTLOADER_BOARD_NAME := bengal
 
 # Camera
-$(call soong_config_set, camera, override_format_from_reserved, true)
+$(call soong_config_set_bool, camera, override_format_from_reserved, true)
 
 # Display
 TARGET_SCREEN_DENSITY := 440
