@@ -1,7 +1,7 @@
 <compatibility-matrix version="5.0" type="framework">
     <hal format="aidl" optional="true">
         <name>android.hardware.bluetooth.audio</name>
-        <version>5</version>
+        <version>6</version>
         <interface>
             <name>IBluetoothAudioProviderFactory</name>
             <instance>default</instance>
@@ -56,7 +56,7 @@
     </hal>
     <hal format="aidl" optional="true">
         <name>android.hardware.power</name>
-        <version>6</version>
+        <version>7</version>
         <interface>
             <name>IPower</name>
             <instance>default</instance>
@@ -272,7 +272,7 @@
     </hal>
     <hal format="aidl" optional="false">
         <name>android.hardware.health</name>
-        <version>4</version>
+        <version>5</version>
         <interface>
             <name>IHealth</name>
             <instance>default</instance>
