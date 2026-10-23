@@ -23,8 +23,7 @@ persist.vendor.dpm.feature=11
 persist.sys.gps.fence=true
 
 # Graphics
-ro.surface_flinger.supports_background_blur=1
-ro.sf.blurs_are_expensive=1
+ro.surface_flinger.supports_background_blur=0
 
 # Media
 vendor.media.target_variant=_khaje_v0
