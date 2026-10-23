@@ -345,7 +345,3 @@ ro.soc.model=SM6225
 
 # Shutdown
 sys.vendor.shutdown.waittime=500
-
-# Satisfy init.qti.qcv.rc
-ro.vendor.qti.soc_name=bengal
-ro.vendor.media_performance_class=0
