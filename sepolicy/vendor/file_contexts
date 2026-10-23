@@ -56,9 +56,6 @@
 
 /dev/miev    u:object_r:miev_device:s0
 
-# Label panelcolor services
-/(vendor|system/vendor)/bin/panelcolor_bin   u:object_r:vendor_panelcolor_exec:s0
-
 /sys/devices/.*/wakeup[0-9]+(/.*)? u:object_r:sysfs_wakeup:s0
 
 /sys/class/wakeup(/.*)?          u:object_r:sysfs_wakeup:s0

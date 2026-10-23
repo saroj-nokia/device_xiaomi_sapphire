@@ -1,7 +1,0 @@
-# Label diag-router and panelcolor services
-type vendor_panelcolor, domain;
-type vendor_panelcolor_exec, exec_type, vendor_file_type, file_type;
-init_daemon_domain(vendor_panelcolor)
-
-# Touch panel lockdown info
-allow vendor_panelcolor proc_tp_lockdown:file r_file_perms;
