@@ -166,10 +166,6 @@
     <!-- Flag indicating if the speed up audio on mt call code should be executed -->
     <bool name="config_speed_up_audio_on_mt_calls">true</bool>
 
-    <!-- Whether or not wcg (wide color gamut) should be enabled on this device,
-         we only enabled it while the device has ability of mixed color spaces composition -->
-    <bool name="config_enableWcgMode">true</bool>
-
     <!-- set to false if we need to show user confirmation
          when alpha identifier is not provided by the UICC -->
     <bool name="config_stkNoAlphaUsrCnf">false</bool>
