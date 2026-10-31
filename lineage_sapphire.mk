@@ -20,9 +20,6 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 # Gapps
 -include vendor/gapps/arm64/arm64-vendor.mk
 
-# AudioFX
-TARGET_EXCLUDES_AUDIOFX := true
-
 # Device configs
 TARGET_BOOT_ANIMATION_RES = 1080
 TARGET_HAS_UDFPS := true
