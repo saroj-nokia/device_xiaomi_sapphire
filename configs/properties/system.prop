@@ -85,7 +85,6 @@ persist.mm.enable.prefetch=true
 persist.backup.ntpServer=0.pool.ntp.org
 
 ro.camerax.extensions.enabled=true
-persist.vendor.camera.privapp.list=com.android.camera,org.lineageos.aperture
 
 # Radio
 DEVICE_PROVISIONED=1
