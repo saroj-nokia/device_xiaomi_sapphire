@@ -378,4 +378,7 @@
 
     <!-- If this is true, the screen will fade off. -->
     <bool name="config_animateScreenLights">true</bool>
+
+          <!-- Whether to enable app launch blur -->
+    <bool name="config_enableAppLaunchBlur">false</bool>
 </resources>
