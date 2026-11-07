@@ -161,11 +161,10 @@ persist.vendor.dpm.vndr.idletimer.mode=default
 drm.service.enabled=true
 
 # Display
-debug.egl.hw=0
 debug.mdpcomp.logs=0
 debug.sf.enable_hwc_vds=0
 debug.sf.latch_unsignaled=0
-debug.sf.auto_latch_unsignaled=0
+debug.sf.auto_latch_unsignaled=1
 debug.sf.enable_transaction_tracing=false
 debug.sf.defer_refresh_rate_when_off=1
 debug.sf.enable_advanced_sf_phase_offset=1
@@ -173,7 +172,6 @@ debug.sf.high_fps_early_gl_phase_offset_ns=-5000000
 debug.sf.high_fps_early_phase_offset_ns=-5000000
 debug.sf.high_fps_late_app_phase_offset_ns=1000000
 debug.sf.high_fps_late_sf_phase_offset_ns=-5000000
-debug.sf.hw=0
 debug.sf.treat_170m_as_sRGB=1
 debug.sf.enable_egl_image_tracker=0
 debug.sf.frame_rate_multiple_threshold=120
