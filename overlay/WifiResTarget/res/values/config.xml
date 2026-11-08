@@ -33,13 +33,13 @@
     <bool name="config_wifi_softap_acs_supported" translatable="false">true</bool>
 
     <!-- Wifi driver supports IEEE80211AX for softap -->
-    <bool name="config_wifiSoftapIeee80211axSupported" translatable="false">true</bool>
+    <bool name="config_wifiSoftapIeee80211axSupported" translatable="false">false</bool>
 
     <!-- Wifi driver supports IEEE80211AX single user beamformer for softap -->
-    <bool name="config_wifiSoftapHeSuBeamformerSupported" translatable="false">true</bool>
+    <bool name="config_wifiSoftapHeSuBeamformerSupported" translatable="false">false</bool>
 
     <!-- Wifi driver supports IEEE80211AX single user beamformee for softap -->
-    <bool name="config_wifiSoftapHeSuBeamformeeSupported" translatable="false">true</bool>
+    <bool name="config_wifiSoftapHeSuBeamformeeSupported" translatable="false">false</bool>
 
     <!-- Indicates that bridged AP mode is supported on this device -->
     <bool name="config_wifiBridgedSoftApSupported" translatable="false">false</bool>
