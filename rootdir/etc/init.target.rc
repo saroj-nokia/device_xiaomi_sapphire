@@ -365,6 +365,3 @@ on property:persist.sys.cota.carrier=OR
 #add for btmac property
 on property:persist.ro.ril.oem.btmac=*
   setprop ro.ril.oem.btmac ${persist.ro.ril.oem.btmac}
-
-on property:sys.boot_completed=1
-    write /sys/devices/virtual/thermal/thermal_message/sconfig 20
