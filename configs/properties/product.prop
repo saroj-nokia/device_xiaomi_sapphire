@@ -81,8 +81,3 @@ ro.lmk.psi_complete_stall_ms=70
 
 # FS-verity
 ro.apk_verity.mode=2
-
-dalvik.vm.boot-dex2oat-cpu-set=0,1,2,3
-dalvik.vm.image-dex2oat-cpu-set=0,1,2,3
-dalvik.vm.background-dex2oat-cpu-set=0,1,2,3
-dalvik.vm.dex2oat-threads=4
