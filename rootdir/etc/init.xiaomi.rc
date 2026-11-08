@@ -6,7 +6,7 @@
 on post-fs-data
     mkdir /data/vendor/misc 01771 system system
     mkdir /data/vendor/misc/xiaomi-fp 0770 system system
-    mkdir /persist/xioami-fp 0770 system system
+    mkdir /persist/xiaomi-fp 0770 system system
     mkdir /mnt/vendor/persist/mi_fp 0770 system system
     mkdir /data/vendor/fpc 0770 system system
     mkdir /data/vendor/fpdump 0770 system system
