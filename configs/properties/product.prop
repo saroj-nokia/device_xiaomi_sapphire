@@ -76,8 +76,5 @@ persist.vendor.radio.enable_temp_dds=true
 ro.vendor.radio.fastdormancy=true
 ro.vendor.radio.features_common=3
 
-# lmkd
-ro.lmk.psi_complete_stall_ms=70
-
 # FS-verity
 ro.apk_verity.mode=2
