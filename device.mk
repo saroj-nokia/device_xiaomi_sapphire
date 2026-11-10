@@ -57,6 +57,25 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     com.dsi.ant@1.0.vendor
 
+# Disable dex2oat debug
+USE_DEX2OAT_DEBUG := false
+
+ART_BUILD_TARGET_DEBUG := false
+ART_BUILD_HOST_DEBUG := false
+
+# Flags
+ifeq ($(TARGET_BUILD_VARIANT), user)
+    # Disable dexpreopt debug info
+    WITH_DEXPREOPT_DEBUG_INFO := false
+    # Reduce system server verbosity
+    PRODUCT_SYSTEM_SERVER_DEBUG_INFO := false
+    # Don't include art debug targets
+    PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
+    # Always preopt extracted APKs to prevent extracting out of the APK for gms
+    # modules.
+    PRODUCT_ALWAYS_PREOPT_EXTRACTED_APK := true
+endif
+
 # Memory Configuration
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.config.low_ram=false
