@@ -17,8 +17,13 @@ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 # Include our private certificate
 -include vendor/lineage-priv/keys/keys.mk
 
-# Gapps
--include vendor/gapps/arm64/arm64-vendor.mk
+# Extra Stuffs
+TARGET_SUPPORTS_QUICK_TAP := true
+WITH_GMS := true
+TARGET_ENABLE_BLUR := true
+BUILD_BCR := false
+TARGET_INCLUDE_ACCORD := false
+EVO_BUILD_TYPE := Unofficial
 
 # AudioFX
 TARGET_EXCLUDES_AUDIOFX := true
