@@ -1,0 +1,17 @@
+[
+  {
+    "repository": "kernel_xiaomi_sapphire",
+    "target_path": "kernel/xiaomi/sapphire",
+    "remote": "theangelplace"
+  },
+  {
+    "repository": "kernel_xiaomi_sapphire-devicetrees",
+    "target_path": "kernel/xiaomi/sapphire-devicetrees",
+    "remote": "theangelplace"
+  },
+  {
+    "repository": "kernel_xiaomi_sapphire-modules",
+    "target_path": "kernel/xiaomi/sapphire-modules",
+    "remote": "theangelplace"
+  }
+]

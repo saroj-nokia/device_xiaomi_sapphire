@@ -11,7 +11,6 @@ include vendor/xiaomi/sapphire/BoardConfigVendor.mk
 -include device/xiaomi/miuicamera-sapphire/BoardConfig.mk
 
 DEVICE_PATH := device/xiaomi/sapphire
-KERNEL_PATH := $(DEVICE_PATH)-kernel
 
 BUILD_BROKEN_DUP_RULES := true
 BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
@@ -98,30 +97,69 @@ TARGET_PER_MGR_ENABLED := true
 # Init
 $(call soong_config_set,libinit,vendor_init_lib,//$(DEVICE_PATH):init_sapphire)
 
-# Kernel prebuilt
+# Kernel
+TARGET_KERNEL_SOURCE := kernel/xiaomi/sapphire
+TARGET_KERNEL_CONFIG := vendor/sapphire_defconfig
+TARGET_KERNEL_CLANG_VERSION := r547379
+TARGET_KERNEL_ADDITIONAL_FLAGS := \
+    BOARD_PLATFORM=bengal \
+    KCFLAGS=-D__ANDROID_COMMON_KERNEL__
+
+# Kernel - DTB/DTBO (merged with libufdt, see dtbs.mk)
 BOARD_USES_DT := true
-BOARD_PREBUILT_DTBIMAGE_DIR := $(KERNEL_PATH)/dtbs
-BOARD_PREBUILT_DTBOIMAGE := $(KERNEL_PATH)/dtbs/dtbo.img
+BOARD_CUSTOM_DTBIMG_MK := $(DEVICE_PATH)/dtbs.mk
+BOARD_CUSTOM_DTBOIMG_MK := $(DEVICE_PATH)/dtbs.mk
 
-TARGET_FORCE_PREBUILT_KERNEL := true
-TARGET_KERNEL_SOURCE := $(KERNEL_PATH)/kernel-headers
-TARGET_NO_KERNEL_OVERRIDE := true
-TARGET_PREBUILT_KERNEL := $(KERNEL_PATH)/kernel
+# Kernel - external modules
+TARGET_KERNEL_EXT_MODULE_ROOT := kernel/xiaomi/sapphire-modules
+TARGET_KERNEL_EXT_MODULES := \
+    qcom/opensource/mmrm-driver \
+    qcom/opensource/securemsm-kernel \
+    qcom/opensource/video-driver \
+    qcom/opensource/graphics-kernel \
+    xiaomi/opensource/miev \
+    qcom/opensource/display-drivers \
+    qcom/opensource/camera-kernel \
+    qcom/opensource/audio-kernel \
+    qcom/opensource/dataipa/drivers/platform/msm \
+    qcom/opensource/datarmnet/core \
+    qcom/opensource/datarmnet-ext/wlan \
+    qcom/opensource/wlan/platform \
+    qcom/opensource/bt-kernel \
+    qcom/opensource/wlan/qcacld-3.0 \
+    xiaomi/opensource/battery_auth \
+    xiaomi/opensource/binder_prio \
+    xiaomi/opensource/bootinfo \
+    xiaomi/opensource/bq25960 \
+    xiaomi/opensource/cp_qc30 \
+    xiaomi/opensource/lct_tp \
+    xiaomi/opensource/xiaomi_touch \
+    xiaomi/opensource/focaltech \
+    xiaomi/opensource/mi_memory \
+    xiaomi/opensource/mi_wmark \
+    xiaomi/opensource/millet \
+    xiaomi/opensource/nxp-nci \
+    xiaomi/opensource/pd_policy_manager \
+    xiaomi/opensource/perf_helper \
+    xiaomi/opensource/sc8541 \
+    xiaomi/opensource/st21nfc \
+    xiaomi/opensource/swinfo \
+    xiaomi/opensource/xiaomi_fp \
+    xiaomi/opensource/xm_smart_chg
 
-PRODUCT_COPY_FILES += $(TARGET_PREBUILT_KERNEL):kernel
+# The qcacld-3.0 module is named qca_cld3_wlan.ko like on stock
+TARGET_MODULE_ALIASES := wlan.ko:qca_cld3_wlan.ko
 
-BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/system_dlkm/modules.load))
-BOARD_SYSTEM_KERNEL_MODULES_BLOCKLIST_FILE :=  $(KERNEL_PATH)/vendor_dlkm/system_dlkm.modules.blocklist
-BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/vendor_dlkm/modules.load))
-BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE :=  $(KERNEL_PATH)/vendor_dlkm/modules.blocklist
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat  $(KERNEL_PATH)/vendor_ramdisk/modules.load))
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(KERNEL_PATH)/vendor_ramdisk/modules.blocklist
-BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(KERNEL_PATH)/vendor_ramdisk/modules.load.recovery))
-
-PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,$(KERNEL_PATH)/system_dlkm/,$(TARGET_COPY_OUT_SYSTEM_DLKM)/lib/modules/5.15.194) \
-    $(call find-copy-subdir-files,*,$(KERNEL_PATH)/vendor_dlkm/,$(TARGET_COPY_OUT_VENDOR_DLKM)/lib/modules) \
-    $(call find-copy-subdir-files,*,$(KERNEL_PATH)/vendor_ramdisk/,$(TARGET_COPY_OUT_VENDOR_RAMDISK)/lib/modules)
+# Kernel - module lists (same layout as stock)
+SYSTEM_KERNEL_MODULES := $(strip $(shell cat $(DEVICE_PATH)/modules/system_dlkm/modules.load))
+BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(SYSTEM_KERNEL_MODULES)
+BOARD_SYSTEM_KERNEL_MODULES_BLOCKLIST_FILE := $(DEVICE_PATH)/modules/system_dlkm/modules.blocklist
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules/vendor_dlkm/modules.load))
+BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(DEVICE_PATH)/modules/vendor_dlkm/modules.blocklist
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules/vendor_ramdisk/modules.load))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(DEVICE_PATH)/modules/vendor_ramdisk/modules.blocklist
+BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules/vendor_ramdisk/modules.load.recovery))
+BOOT_KERNEL_MODULES := $(BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD)
 
 # Kernel
 BOARD_KERNEL_BASE := 0x00000000
