@@ -24,6 +24,9 @@ on post-fs && property:ro.boot.hwname=sapphiren
 on post-fs-data && property:ro.boot.hwname=sapphiren
     mkdir /data/vendor/nfc 0770 nfc nfc
 
+on boot && property:ro.boot.hwname=sapphiren
+    start vendor.st_nfc_hal_service
+
 # For the non-NFC variant (sapphire)
 on boot && property:ro.boot.hwname=sapphire
     stop vendor.st_nfc_hal_service
@@ -57,6 +60,9 @@ service vendor.st_nfc_hal_service /vendor/bin/hw/android.hardware.nfc@1.2-servic
     class hal
     user nfc
     group nfc
+    interface android.hardware.nfc@1.0::INfc default
+    interface android.hardware.nfc@1.1::INfc default
+    interface android.hardware.nfc@1.2::INfc default
     disabled
 
 service stflashtool /vendor/bin/STFlashTool
