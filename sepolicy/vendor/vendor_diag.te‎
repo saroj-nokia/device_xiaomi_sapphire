@@ -1,0 +1,8 @@
+# Domain for diag-router service
+# Fixes: diag-router has no domain transition from init
+# avc: denied (no domain transition from u:r:init:s0)
+init_daemon_domain(vendor_diag)
+
+# Allow diag-router to create and use netlink uevent socket
+# Fixes: avc: denied { create } for comm="diag-router" scontext=u:r:vendor_diag:s0 tcontext=u:r:vendor_diag:s0 tclass=netlink_kobject_uevent_socket
+allow vendor_diag self:netlink_kobject_uevent_socket create_socket_perms_no_ioctl;
