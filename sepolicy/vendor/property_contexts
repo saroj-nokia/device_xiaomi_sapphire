@@ -26,3 +26,6 @@ ro.telephony.sim_slots.count                 u:object_r:radio_prop:s0
 
 
 ro.vendor.camera.res.fmq.size  u:object_r:vendor_camera_res_prop:s0
+
+# Touch game mode
+vendor.touch.game_mode    u:object_r:vendor_touch_game_prop:s0 exact string

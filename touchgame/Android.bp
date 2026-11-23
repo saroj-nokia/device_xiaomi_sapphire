@@ -1,0 +1,16 @@
+//
+// Copyright (C) 2026 The LineageOS Project
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_binary {
+    name: "touch_game_mode",
+    vendor: true,
+    srcs: ["touch_game_mode.c"],
+    shared_libs: ["liblog"],
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+}

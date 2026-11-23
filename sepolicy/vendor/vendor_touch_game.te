@@ -1,0 +1,9 @@
+type vendor_touch_game, domain;
+type vendor_touch_game_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(vendor_touch_game)
+
+# Touch game mode through the Xiaomi touch interface
+allow vendor_touch_game touchfeature_device:chr_file rw_file_perms;
+
+get_prop(vendor_touch_game, vendor_touch_game_prop)
