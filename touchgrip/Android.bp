@@ -1,0 +1,15 @@
+//
+// Copyright (C) 2026 The LineageOS Project
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+android_app {
+    name: "TouchGrip",
+
+    srcs: ["src/**/*.java"],
+
+    certificate: "platform",
+    platform_apis: true,
+    system_ext_specific: true,
+}

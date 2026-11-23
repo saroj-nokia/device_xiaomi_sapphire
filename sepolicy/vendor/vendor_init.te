@@ -25,3 +25,6 @@ allow vendor_qti_init_shell configfs:{
   file
   lnk_file
 } create_file_perms;
+
+# init.target.rc writes the grip angle on sys.tp.grip_enable
+allow vendor_init proc_tp_grip_area:file w_file_perms;

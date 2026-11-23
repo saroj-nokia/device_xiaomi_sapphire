@@ -21,6 +21,7 @@ genfscon sysfs /devices/platform/soc/4ac0000.qcom,qupv3_0_geni_se/4a84000.i2c/i2
 genfscon sysfs /devices/platform/soc/4ac0000.qcom,qupv3_0_geni_se/4a84000.i2c/i2c-0/0-0065/power_supply/ti-cp-standalone/wakeup13 u:object_r:sysfs_wakeup:s0
 
 # DT2W
+genfscon proc /tp_grip_area                                                    u:object_r:proc_tp_grip_area:s0
 genfscon proc /tp_gesture                                                      u:object_r:proc_tp_gesture:s0
 
 # Extcon
