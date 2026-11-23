@@ -25,8 +25,17 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * Keeps the FocalTech touch IC in step with what is on screen:
@@ -35,9 +44,13 @@ import java.io.IOException;
  *   in portrait and the short edges in landscape. The driver maps 90 to
  *   "USB port on the right" and 270 to "USB port on the left"; anything
  *   else is portrait.
- * - Games: while an app marked as a game is in the foreground, the IC is
+ * - Games: while a game is in the foreground (an app that declares itself
+ *   a game, or one built on a game engine such as Unity, Unreal, Cocos,
+ *   Godot or libGDX), the IC is
  *   put in its game mode (full-rate scanning, as MIUI's Game Turbo does)
- *   through vendor.touch.game_mode and the touch_game_mode service.
+ *   through vendor.touch.game_mode and the touch_game_mode service, and
+ *   mi_thermald is switched to its game thermal profile (thermal-tgame),
+ *   so a long session does not run on the everyday profile.
  *
  * The IC drops both settings when the touch panel suspends, and the driver
  * refuses writes while suspended, so both are sent again on every screen on.
@@ -47,6 +60,19 @@ public class TouchGripApp extends Application implements DisplayManager.DisplayL
     private static final String TAG = "TouchGrip";
     private static final String GRIP_AREA = "/proc/tp_grip_area";
     private static final String PROP_GAME_MODE = "vendor.touch.game_mode";
+    private static final String THERMAL_SCENE =
+            "/sys/class/thermal/thermal_message/sconfig";
+    private static final String SCONFIG_DEFAULT = "0";
+    private static final String SCONFIG_GAME = "18";
+
+    // Native libraries of the common game engines
+    private static final String[] GAME_ENGINE_LIBS = {
+        "libunity.so", "libil2cpp.so",                         // Unity
+        "libUE4.so", "libUnreal.so",                           // Unreal
+        "libcocos2dcpp.so", "libcocos2djs.so", "libcocos.so",  // Cocos
+        "libgodot_android.so",                                 // Godot
+        "libgdx.so",                                           // libGDX
+    };
 
     // The touch panel resumes with the display; give it a moment
     private static final long SCREEN_ON_DELAY_MS = 500;
@@ -55,6 +81,8 @@ public class TouchGripApp extends Application implements DisplayManager.DisplayL
     private PackageManager mPackageManager;
     private Handler mHandler;
     private int mLastAngle = -1;
+
+    private final Map<String, Boolean> mEngineCache = new HashMap<>();
 
     private String mTopPackage = "";
     private boolean mGameMode = false;
@@ -154,6 +182,16 @@ public class TouchGripApp extends Application implements DisplayManager.DisplayL
         }
     }
 
+    // mi_thermald picks its thermal-*.conf from this scene id, as MIUI's
+    // PowerKeeper sets it: 0 is thermal-normal, 18 thermal-tgame
+    private static void writeThermalScene(String scene) {
+        try (FileWriter writer = new FileWriter(THERMAL_SCENE)) {
+            writer.write(scene);
+        } catch (IOException e) {
+            Log.w(TAG, "Failed to set thermal scene " + scene + ": " + e.getMessage());
+        }
+    }
+
     private static boolean write(int angle) {
         try (FileWriter writer = new FileWriter(GRIP_AREA)) {
             writer.write(String.valueOf(angle));
@@ -190,16 +228,73 @@ public class TouchGripApp extends Application implements DisplayManager.DisplayL
     }
 
     private boolean isGame(String pkg) {
+        final ApplicationInfo ai;
         try {
-            ApplicationInfo ai = mPackageManager.getApplicationInfo(pkg, 0);
-            return ai.category == ApplicationInfo.CATEGORY_GAME
-                    || (ai.flags & ApplicationInfo.FLAG_IS_GAME) != 0;
+            ai = mPackageManager.getApplicationInfo(pkg, 0);
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
+
+        if (ai.category == ApplicationInfo.CATEGORY_GAME
+                || (ai.flags & ApplicationInfo.FLAG_IS_GAME) != 0) {
+            return true;
+        }
+        // Launcher, Settings and friends are never games
+        if ((ai.flags & ApplicationInfo.FLAG_SYSTEM) != 0) return false;
+
+        // Many games do not declare themselves as one; look for a game
+        // engine instead. sourceDir changes on every update, so an updated
+        // app is checked again.
+        String key = pkg + ":" + ai.sourceDir;
+        Boolean cached = mEngineCache.get(key);
+        if (cached == null) {
+            cached = hasGameEngine(ai);
+            mEngineCache.put(key, cached);
+            Log.i(TAG, pkg + (cached ? " uses a game engine" : " is not a game"));
+        }
+        return cached;
+    }
+
+    private static boolean hasGameEngine(ApplicationInfo ai) {
+        // Extracted native libraries
+        if (ai.nativeLibraryDir != null) {
+            String[] libs = new File(ai.nativeLibraryDir).list();
+            if (libs != null) {
+                for (String lib : libs) {
+                    if (isEngineLib(lib)) return true;
+                }
+            }
+        }
+
+        // Libraries kept inside the APKs (extractNativeLibs="false", splits)
+        List<String> apks = new ArrayList<>();
+        if (ai.sourceDir != null) apks.add(ai.sourceDir);
+        if (ai.splitSourceDirs != null) apks.addAll(Arrays.asList(ai.splitSourceDirs));
+        for (String apk : apks) {
+            try (ZipFile zip = new ZipFile(apk)) {
+                Enumeration<? extends ZipEntry> entries = zip.entries();
+                while (entries.hasMoreElements()) {
+                    String name = entries.nextElement().getName();
+                    if (!name.startsWith("lib/")) continue;
+                    if (isEngineLib(name.substring(name.lastIndexOf('/') + 1))) return true;
+                }
+            } catch (IOException e) {
+                Log.w(TAG, "Failed to read " + apk + ": " + e.getMessage());
+            }
+        }
+        return false;
+    }
+
+    private static boolean isEngineLib(String lib) {
+        for (String engine : GAME_ENGINE_LIBS) {
+            if (engine.equals(lib)) return true;
+        }
+        return false;
     }
 
     private void sendGameMode(boolean enable) {
+        writeThermalScene(enable ? SCONFIG_GAME : SCONFIG_DEFAULT);
+
         mToggle = !mToggle;
         String value = (enable ? "1" : "0") + (mToggle ? "a" : "b");
         try {
