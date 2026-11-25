@@ -22,6 +22,3 @@ binder_call(system_app, hal_health_default)
 binder_call(system_app, hal_ir_default)
 binder_call(system_app, hal_memtrack_default)
 binder_call(system_app, vendor_hal_gnss_qti)
-
-# TouchGrip: tell the touch IC the screen rotation
-allow system_app proc_tp_grip_area:file w_file_perms;
