@@ -644,8 +644,7 @@ PRODUCT_COPY_FILES += \
 
 # Touch
 PRODUCT_PACKAGES += \
-    TouchGrip \
-    touch_game_mode
+    TouchGrip
 
 # Vibrator
 PRODUCT_PACKAGES += \

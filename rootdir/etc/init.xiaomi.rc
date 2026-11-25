@@ -73,16 +73,6 @@ service stflashtool /vendor/bin/STFlashTool
     oneshot
     disabled
 
-service vendor.touch_game_mode /vendor/bin/touch_game_mode
-    class late_start
-    user system
-    group system
-    disabled
-    oneshot
-
-on property:vendor.touch.game_mode=*
-    start vendor.touch_game_mode
-
 service vendor.goodix-events /vendor/bin/init.goodix.events.sh
     class late_start
     user root

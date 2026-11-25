@@ -64,4 +64,3 @@
 
 /sys/class/wakeup(/.*)?          u:object_r:sysfs_wakeup:s0
 /sys/devices/.*wakeup/.* u:object_r:sysfs_wakeup:s0
-/(vendor|system/vendor)/bin/touch_game_mode  u:object_r:vendor_touch_game_exec:s0
