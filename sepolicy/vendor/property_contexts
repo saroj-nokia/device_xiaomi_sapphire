@@ -24,5 +24,7 @@ RUNTIME_OVERRIDE_LOG_LEVEL          u:object_r:exported_system_prop:s0
 persist.vendor.bt.a2dp_offload_cap  u:object_r:vendor_bluetooth_prop:s0
 ro.telephony.sim_slots.count                 u:object_r:radio_prop:s0
 
+ro.nfc.port    u:object_r:vendor_nfc_prop:s0 exact string
+
 
 ro.vendor.camera.res.fmq.size  u:object_r:vendor_camera_res_prop:s0

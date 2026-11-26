@@ -1,5 +1,10 @@
 # Allow the USB HAL to search the graphics sysfs directory
 allow vendor_hal_usb_qti vendor_sysfs_graphics:dir search;
 
+allow vendor_hal_usb_qti sysfs_udc:dir r_dir_perms;
+allow vendor_hal_usb_qti sysfs_udc:file r_file_perms;
+
+allow vendor_hal_usb_qti sysfs_udc:lnk_file r_file_perms;
+
 # Allow the USB HAL to read files inside that directory (like brightness)
 allow vendor_hal_usb_qti vendor_sysfs_graphics:file r_file_perms;
