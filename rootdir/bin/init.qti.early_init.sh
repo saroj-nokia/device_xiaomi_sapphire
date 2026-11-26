@@ -60,7 +60,6 @@ elif [ "$soc_id" -eq 585 ]; then
     setprop ro.vendor.qti.soc_model SG4150P
     setprop vendor.audio.gaming.enabled true
     setprop vendor.audio.feature.dmabuf.cma.memory.enable true
-fi
 elif [ "$soc_id" -eq 586 ]; then
     setprop ro.vendor.qti.soc_model QCM4325
 fi
