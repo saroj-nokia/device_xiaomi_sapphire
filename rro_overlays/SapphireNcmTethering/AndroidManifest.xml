@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.networkstack.tethering.overlay.sapphire.ncm">
+    <overlay
+        android:isStatic="true"
+        android:priority="10"
+        android:targetName="TetheringConfig"
+        android:targetPackage="com.android.networkstack.tethering" />
+</manifest>

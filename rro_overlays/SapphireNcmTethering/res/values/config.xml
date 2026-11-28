@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer translatable="false" name="config_tether_usb_functions">1</integer>
+</resources>

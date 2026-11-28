@@ -137,6 +137,8 @@ PRODUCT_PACKAGES += \
 TARGET_SCREEN_HEIGHT := 2400
 TARGET_SCREEN_WIDTH := 1080
 
+PRODUCT_PACKAGES += SapphireNcmTetheringOverlay
+
 # Bluetooth
 PRODUCT_PACKAGES += \
     android.hardware.bluetooth.audio-impl \
@@ -473,7 +475,8 @@ PRODUCT_PACKAGES += \
     SettingsProviderResSapphire \
     SettingsResSapphire \
     SystemUIResSapphire \
-    WifiResSapphire
+    WifiResSapphire \
+    ConnectivityResSapphire
 
 # Overlays Lineage
 DEVICE_PACKAGE_OVERLAYS += \
@@ -681,4 +684,3 @@ PRODUCT_PACKAGES += \
     firmware_wlan_mac.bin_symlink \
     firmware_WCNSS_qcom_cfg.ini_symlink \
     firmware_wlanmdsp.mbn_symlink
-    
