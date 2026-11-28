@@ -292,7 +292,7 @@ echo 1 > /sys/devices/system/cpu/cpufreq/policy0/walt/pl
 echo 0 > /sys/devices/system/cpu/cpufreq/policy0/walt/rtg_boost_freq
 
 # configure input boost settings
-echo 1190000 0 0 0 0 0 0 0 > /proc/sys/walt/input_boost/input_boost_freq
+echo 1516800 0 0 0 1344000 0 0 0 > /proc/sys/walt/input_boost/input_boost_freq
 echo 120 > /proc/sys/walt/input_boost/input_boost_ms
 
 echo 1516800 0 0 0 2208000 0 0 0 > /proc/sys/walt/input_boost/powerkey_input_boost_freq
